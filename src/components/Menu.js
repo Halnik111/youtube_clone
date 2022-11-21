@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import LogoIcon from "../img/LogoIcon.png";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SubscriptionsOutlinedIcon from '@mui/icons-material/SubscriptionsOutlined';
 import VideoLibraryOutlinedIcon from '@mui/icons-material/VideoLibraryOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
-import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 import TrendingOutlinedIcon from '@mui/icons-material/WhatshotOutlined';
 import MusicNoteOutlinedIcon from '@mui/icons-material/MusicNoteOutlined';
 import LocalMoviesOutlinedIcon from '@mui/icons-material/LocalMoviesOutlined';
@@ -19,30 +17,24 @@ import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightne
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const Container = styled.div`
-  flex: 1;
   background-color: ${({theme}) => theme.bg};
-  height: 100vh;
+  height: 100%;
   color: ${({theme}) => theme.text};
   font-size: 14px;
   position: sticky;
-  top: 0;
+  top: 71px;
 `;
 
 const Wrapper = styled.div`
-  padding: 18px 26px;
+  padding: 0 25px;
+  width: 190px;
+
 `;
 
-const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: bold;
-  margin-bottom: 25px;
-  font-size: 18px;
-`;
-
-const Img = styled.img`
-  height: 40px;
+const Title = styled.div`
+  color: ${({theme}) => theme.text};
+  margin-bottom: 20px;
+  font-size: large;
 `;
 
 const Item = styled.div`
@@ -74,7 +66,7 @@ const Button = styled.a`
 
 const Hr = styled.hr`
   margin: 15px 0;
-  border: 0.5px solid ${({theme}) => theme.softColor};
+  border: 1px solid ${({theme}) => theme.softColor};
 `;
 
 
@@ -82,10 +74,6 @@ const Menu = ({darkMode, setDarkMode}) => {
     return (
         <Container>
             <Wrapper>
-                <Logo>
-                    <Img src={LogoIcon}/>
-                    Youtube
-                </Logo>
                 <Item>
                     <HomeOutlinedIcon/>
                     Home
@@ -112,6 +100,9 @@ const Menu = ({darkMode, setDarkMode}) => {
                     </Button>
                 </Login>
                 <Hr/>
+                <Title>
+                    Explore
+                </Title>
                 <Item>
                     <TrendingOutlinedIcon/>
                     Trending

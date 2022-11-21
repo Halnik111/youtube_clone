@@ -4,15 +4,28 @@ import Navbar from "./components/Navbar";
 import {darkTheme, lightTheme} from "./utils/Theme";
 import {ThemeProvider} from "styled-components";
 import {useState} from "react";
+import {
+    BrowserRouter,
+    Routes,
+    Route
+} from "react-router-dom";
+import Home from "./pages/Home";
+import Video from "./pages/Video";
 
 const Container = styled.div `
-  display: flex;
+  flex: 1;
+  background-color: ${({theme}) => theme.bg};
+  height: 100vh;
 `;
 
 const Main = styled.div `
-    flex: 7;
+  display: flex;
+  background-color: ${({theme}) => theme.bg};
+  color: ${({theme}) => theme.text};
 `;
-const Wrapper = styled.div ``;
+const Wrapper = styled.div `
+    padding: 22px 85px;
+`;
 
 
 function App() {
@@ -20,62 +33,24 @@ function App() {
 
     return (
         <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+            <BrowserRouter>
             <Container>
-                <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
+                <Navbar/>
                 <Main>
-                    <Navbar/>
+                    <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
                     <Wrapper>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
-                        <h1>video card</h1>
+                        <Routes>
+                            <Route path="/">
+                                <Route index element={<Home/>}/>
+                                <Route path="video">
+                                    <Route path=":id" element={<Video/>}/>
+                                </Route>
+                            </Route>
+                        </Routes>
                     </Wrapper>
                 </Main>
             </Container>
+            </BrowserRouter>
         </ThemeProvider>
   );
 }
