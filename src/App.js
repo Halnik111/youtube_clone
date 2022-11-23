@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Menu from "./components/Menu";
 import Navbar from "./components/Navbar";
 import {darkTheme, lightTheme} from "./utils/Theme";
 import {ThemeProvider} from "styled-components";
@@ -13,18 +12,16 @@ import Home from "./pages/Home";
 import Video from "./pages/Video";
 
 const Container = styled.div `
-  flex: 1;
   background-color: ${({theme}) => theme.bg};
   height: 100vh;
+  
+  
 `;
 
 const Main = styled.div `
   display: flex;
   background-color: ${({theme}) => theme.bg};
   color: ${({theme}) => theme.text};
-`;
-const Wrapper = styled.div `
-    padding: 22px 85px;
 `;
 
 
@@ -37,17 +34,15 @@ function App() {
             <Container>
                 <Navbar/>
                 <Main>
-                    <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
-                    <Wrapper>
                         <Routes>
                             <Route path="/">
-                                <Route index element={<Home/>}/>
+                                //todo find better way to pass props
+                                <Route index element={<Home darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
                                 <Route path="video">
                                     <Route path=":id" element={<Video/>}/>
                                 </Route>
                             </Route>
                         </Routes>
-                    </Wrapper>
                 </Main>
             </Container>
             </BrowserRouter>

@@ -18,17 +18,28 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 
 const Container = styled.div`
   background-color: ${({theme}) => theme.bg};
-  height: 100%;
   color: ${({theme}) => theme.text};
   font-size: 14px;
-  position: sticky;
-  top: 71px;
+  height: 100%;
+  position: fixed;
+  margin-top: 71px;
+  top: 0;
 `;
 
 const Wrapper = styled.div`
   padding: 0 25px;
   width: 190px;
+  max-height: calc(110vh - 9rem);
+  overflow-y: scroll;
+  
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
+  ::-webkit-scrollbar-thumb {
+    background-color: ${({theme}) => theme.scrollbarColor};
+    border-radius: 5px;
+  }
 `;
 
 const Title = styled.div`

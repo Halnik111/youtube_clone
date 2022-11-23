@@ -1,17 +1,18 @@
 import React from 'react';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
+import Thumbnail from "../img/test pic.jpg";
 
 const Container = styled.div`
-  width: 360px;
-  margin-bottom: 45px;
+  margin: 20px auto;
+  max-width: 360px;
   cursor: pointer;
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 202px;
   border-radius: 12px;
+  max-width: 100%;
+  height: auto;
 `;
 
 const Details = styled.div`
@@ -21,7 +22,7 @@ const Details = styled.div`
 `;
 
 const ChannelImage = styled.img`
-    width: 36px;
+  width: 36px;
   height: 36px;
   border-radius: 50%;
   background-color: aliceblue;
@@ -48,9 +49,9 @@ const Info = styled.div`
 
 const Card = () => {
     return (
-        <Link to={"/video/test"} style={{textDecoration:"none"}}>
             <Container>
-                <Image src={"https://media.istockphoto.com/id/1322277517/photo/wild-grass-in-the-mountains-at-sunset.jpg?s=612x612&w=0&k=20&c=6mItwwFFGqKNKEAzv0mv6TaxhLN3zSE43bWmFN--J5w="} />
+                <Link to={"/video/test"} style={{textDecoration:"none"}}>
+                <Image src={Thumbnail} />
                 <Details>
                     <ChannelImage src={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}/>
                     <Video_description>
@@ -59,8 +60,9 @@ const Card = () => {
                         <Info>600,000 views 1 day ago</Info>
                     </Video_description>
                 </Details>
+                </Link>
             </Container>
-        </Link>
+
     );
 };
 
