@@ -27,24 +27,24 @@ const Home = ({darkMode, setDarkMode}) => {
     return (
         <ContentWrapper>
             <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
-        <Container>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-        </Container>
+            <Container>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+            </Container>
         </ContentWrapper>
 
     );

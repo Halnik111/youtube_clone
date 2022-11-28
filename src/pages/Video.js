@@ -1,20 +1,21 @@
 import React from 'react';
 import styled from "styled-components";
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import RecommendationsCard from "../components/Video/RecommendationsCard";
+import VideoComments from "../components/Video/VideoComments";
+import VideoDescription from "../components/Video/VideoDescription";
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   margin: 85px auto;
-  gap: 24px;
 `;
 
 const Content = styled.div`
     width: 100%;
   max-width: 1280px;
+  margin:0 24px;
 `;
 
 const VideoWrapper = styled.div`
@@ -30,39 +31,11 @@ const IFrame = styled.iframe`
   position: absolute;
   top: 0;
   width: 100%;
-`
-
-const Title = styled.h1`
-  font-size: 18px;
-  font-weight: 400;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  color: ${({theme}) => theme.text};
-`;
-
-const Details = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Info = styled.span`
-  ${({theme}) => theme.textSoft}
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  gap: 20px;
-  ${({theme}) => theme.textSoft}
-`;
-
-const Button = styled.div`
-    
+  z-index: 0;
 `;
 
 const Recommendations = styled.div`
-  width: 430px;
-  background-color: red;
+    
 `;
 
 const Video = () => {
@@ -71,31 +44,24 @@ const Video = () => {
             <Content>
                 <VideoWrapper>
                     <IFrame
-                    src="https://youtube.com/embed/BvWtNx3VOUA"
+                        src="https://youtube.com/embed/BvWtNx3VOUA"
                     >
                     </IFrame>
                 </VideoWrapper>
-                <Title>
-                    Test Video
-                </Title>
-                <Details>
-                    <Info>
-                        7,950,150 views May 22, 2022
-                    </Info>
-                    <Buttons>
-                        <Button>
-                            <ThumbUpAltOutlinedIcon/>
-                            120
-                        </Button>
-                        <Button>
-                            <ThumbDownAltOutlinedIcon/>
-                            Dislike
-                        </Button>
-                    </Buttons>
-                </Details>
+                <VideoDescription/>
+                <VideoComments/>
             </Content>
             <Recommendations>
-                Recommendations
+                <RecommendationsCard/>
+                <RecommendationsCard/>
+                <RecommendationsCard/>
+                <RecommendationsCard/>
+                <RecommendationsCard/>
+                <RecommendationsCard/>
+                <RecommendationsCard/>
+                <RecommendationsCard/>
+                <RecommendationsCard/>
+                <RecommendationsCard/>
             </Recommendations>
         </Container>
     );

@@ -4,7 +4,8 @@ export const darkTheme = {
     text: 'white',
     textSoft: '#aaaaaa',
     softColor: 'rgb(40,40,42)',
-    colorHighlight: 'rgb(63,63,64)',
+    colorHighlight: 'rgba(255,255,255,0.1)',
+    colorFocus: 'rgba(255,255,255,0.2)',
     scrollbarColor: 'rgba(255,255,255,0.3)'
 }
 
@@ -14,5 +15,7 @@ export const lightTheme = {
     text: 'black',
     textSoft: '#606060',
     softColor: 'rgba(0,0,0,0.1)',
+    colorHighlight: 'rgba(0,0,0,0.05)',
+    colorFocus: 'rgba(0,0,0,0.1)',
     scrollbarColor: 'rgba(0,0,0,0.4)'
 }
