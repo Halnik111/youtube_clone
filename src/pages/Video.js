@@ -10,6 +10,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   margin: 85px auto;
+
+  @media screen and (max-width: 1020px) {
+    flex-wrap: wrap;
+    justify-content: left;
+  }
 `;
 
 const Content = styled.div`

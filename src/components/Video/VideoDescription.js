@@ -10,15 +10,22 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  display: flex;  
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const Buttons = styled.div`
   display: flex;
   gap: 20px;
-  margin-left: auto;
-  color: ${({theme}) => theme.text};
-  
+  height: 36px;
+`;
+
+const User = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-right: auto;
+  margin-bottom: 20px;
+  height: 36px;
 `;
 
 const Button = styled.div`
@@ -33,6 +40,10 @@ const Button = styled.div`
   
   :hover {
     background-color: ${({theme}) => theme.colorFocus};
+  }
+  
+  :nth-child(4) {
+    margin-right: 20px;
   }
 `;
 
@@ -72,11 +83,6 @@ const Title = styled.h1`
   color: ${({theme}) => theme.text};
 `;
 
-const User = styled.div`
-    display: flex;
-  gap: 20px;
-`;
-
 const ChannelImage = styled.img`
   width: 36px;
   height: 36px;
@@ -87,6 +93,7 @@ const ChannelImage = styled.img`
 const UserDetails = styled.div`
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 const Username = styled.div`
@@ -96,11 +103,16 @@ const Username = styled.div`
 
 const Subscribers = styled.div`
     font-size: 12px;
+  font-weight: 400;
+  color: ${({theme}) => theme.textSoft};
 `;
 
 const Info = styled.div`
-  color: ${({theme}) => theme.text};
-  margin: 20px 0;  
+  background-color: ${({theme}) => theme.colorHighlight};
+  padding: 15px;
+  margin-top: 20px;
+  height: 80px;
+  border-radius: 10px;
 `;
 
 const VideoDescription = () => {
@@ -149,6 +161,8 @@ const VideoDescription = () => {
             </Wrapper>
             <Info>
                 7,950,150 views May 22, 2022
+                <br/>
+                asd
             </Info>
         </Container>
     );

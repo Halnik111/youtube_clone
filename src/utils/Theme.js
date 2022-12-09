@@ -1,5 +1,6 @@
 export const darkTheme = {
     bg: '#181818',
+    bgOpposite: '#f9f9f9',
     bgLighter: '#202020',
     text: 'white',
     textSoft: '#aaaaaa',
@@ -11,6 +12,7 @@ export const darkTheme = {
 
 export const lightTheme = {
     bg: '#f9f9f9',
+    bgOpposite: '#181818',
     bgLighter: 'white',
     text: 'black',
     textSoft: '#606060',

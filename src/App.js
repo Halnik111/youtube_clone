@@ -14,8 +14,6 @@ import Video from "./pages/Video";
 const Container = styled.div `
   background-color: ${({theme}) => theme.bg};
   height: 100vh;
-  
-  
 `;
 
 const Main = styled.div `
@@ -31,20 +29,20 @@ function App() {
     return (
         <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
             <BrowserRouter>
-            <Container>
-                <Navbar/>
-                <Main>
-                        <Routes>
-                            <Route path="/">
-                                //todo find better way to pass props
-                                <Route index element={<Home darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
-                                <Route path="video">
-                                    <Route path=":id" element={<Video/>}/>
+                <Container>
+                    <Navbar/>
+                    <Main>
+                            <Routes>
+                                <Route path="/">
+                                    //todo find better way to pass props
+                                    <Route index element={<Home darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
+                                    <Route path="video">
+                                        <Route path=":id" element={<Video/>}/>
+                                    </Route>
                                 </Route>
-                            </Route>
-                        </Routes>
-                </Main>
-            </Container>
+                            </Routes>
+                    </Main>
+                </Container>
             </BrowserRouter>
         </ThemeProvider>
   );
