@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Video from "./pages/Video";
+import SignIn from "./pages/SignIn";
 
 const Container = styled.div `
   background-color: ${({theme}) => theme.bg};
@@ -32,15 +33,16 @@ function App() {
                 <Container>
                     <Navbar/>
                     <Main>
-                            <Routes>
-                                <Route path="/">
-                                    //todo find better way to pass props
-                                    <Route index element={<Home darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
-                                    <Route path="video">
-                                        <Route path=":id" element={<Video/>}/>
-                                    </Route>
+                        <Routes>
+                            <Route path="/">
+                                //todo find better way to pass props
+                                <Route index element={<Home darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
+                                <Route path="video">
+                                    <Route path=":id" element={<Video/>}/>
                                 </Route>
-                            </Routes>
+                                <Route path={"signIn"} element={<SignIn darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
+                            </Route>
+                        </Routes>
                     </Main>
                 </Container>
             </BrowserRouter>

@@ -100,10 +100,13 @@ const Navbar = () => {
                         <SearchOutlinedIcon />
                     </SearchButton>
                 </Search>
-                <Button>
-                    <AccountCircleOutlinedIcon/>
-                    Sign in
-                </Button>
+                <Link to={"signIn"} style={{textDecoration: "none"}}>
+
+                    <Button>
+                        <AccountCircleOutlinedIcon/>
+                        Sign in
+                    </Button>
+                </Link>
             </Wrapper>
         </Container>
     );

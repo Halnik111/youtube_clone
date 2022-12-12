@@ -38,7 +38,7 @@ const Info = styled.div`
 
 const RecommendationsCard = () => {
     return (
-        <Link to={"/video/   test"} style={{textDecoration:"none"}}>
+        <Link to={"/video/test"} style={{textDecoration:"none"}}>
         <Container>
                 <Image src={Thumbnail} />
                 <Details>

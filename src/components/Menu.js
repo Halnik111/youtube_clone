@@ -15,6 +15,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SendFeedBackOutlinedIcon from '@mui/icons-material/SmsFailedOutlined';
 import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightnessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import {Link} from "react-router-dom";
 
 const Container = styled.div`
   background-color: ${({theme}) => theme.bg};
@@ -105,10 +106,12 @@ const Menu = ({darkMode, setDarkMode}) => {
                 <Hr/>
                 <Login>
                     Sign in to like videos, comment, and subscribe.
-                    <Button>
-                        <AccountCircleOutlinedIcon/>
-                        Sign in
-                    </Button>
+                    <Link to={"signIn"} style={{textDecoration: "none"}}>
+                        <Button>
+                            <AccountCircleOutlinedIcon/>
+                            Sign in
+                        </Button>
+                    </Link>
                 </Login>
                 <Hr/>
                 <Title>

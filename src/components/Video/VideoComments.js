@@ -134,7 +134,7 @@ const VideoComments = () => {
                             Test User
                         </ChannelName>
                         <DateAdded>
-                            3 days ago,
+                            3 days ago
                         </DateAdded>
                     </CommentWrapper>
                     Comment
