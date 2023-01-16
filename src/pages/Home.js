@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import Card from "../components/Card";
 import Menu from "../components/Menu";
@@ -23,27 +23,25 @@ const ContentWrapper =  styled.div`
 `;
 
 
-const Home = ({darkMode, setDarkMode}) => {
+const Home = ({type, darkMode, setDarkMode}) => {
+    const [videos, setVideos] = useState([]);
+
+    useEffect(() => {
+        fetchVideos();
+    }, [type])
+
+    const fetchVideos = async () => {
+        return await fetch(`http://localhost:8080/videos/${type}`)
+            .then(res => res.json())
+            .then(data => setVideos(data));
+    }
     return (
         <ContentWrapper>
             <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
             <Container>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
+                {
+                    videos.map(video => <Card key={video._id} video={video}/>)
+                }
             </Container>
         </ContentWrapper>
 

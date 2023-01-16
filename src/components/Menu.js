@@ -90,10 +90,12 @@ const Menu = ({darkMode, setDarkMode}) => {
                     <HomeOutlinedIcon/>
                     Home
                 </Item>
-                <Item>
-                    <SubscriptionsOutlinedIcon/>
-                    Subscriptions
-                </Item>
+                <Link to={"subscription"} style={{textDecoration: "none", color:"inherit"}}>
+                    <Item>
+                        <SubscriptionsOutlinedIcon/>
+                        Subscriptions
+                    </Item>
+                </Link>
                 <Hr/>
                 <Item>
                     <VideoLibraryOutlinedIcon/>
@@ -117,10 +119,12 @@ const Menu = ({darkMode, setDarkMode}) => {
                 <Title>
                     Explore
                 </Title>
-                <Item>
-                    <TrendingOutlinedIcon/>
-                    Trending
-                </Item>
+                <Link to={"trend"} style={{textDecoration: "none", color:"inherit"}}>
+                    <Item>
+                        <TrendingOutlinedIcon/>
+                        Trending
+                    </Item>
+                </Link>
                 <Item>
                     <MusicNoteOutlinedIcon/>
                     Music

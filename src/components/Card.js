@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import Thumbnail from "../img/test pic.jpg";
+import {format} from "timeago.js";
 
 const Container = styled.div`
   margin: 20px auto;
@@ -47,17 +47,29 @@ const Info = styled.div`
   font-size: 14px;
 `
 
-const Card = () => {
+const Card = ({video}) => {
+    const [channel, setChannel] = useState({});
+
+
+    useEffect(() => {
+        fetchChannel();
+    }, [video.userId]);
+
+    const fetchChannel = async () => {
+        return await fetch(`http://localhost:8080/users/find/${video.userId}`)
+            .then(res => res.json())
+            .then(data => setChannel(data));
+    }
     return (
             <Container>
                 <Link to={"/video/test"} style={{textDecoration:"none"}}>
-                <Image src={Thumbnail} />
+                <Image src={video.imageUrl}/>
                 <Details>
-                    <ChannelImage src={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}/>
+                    <ChannelImage src={channel.image}/>
                     <Video_description>
-                        <Title>Test Video</Title>
-                        <Channel>Channel Name</Channel>
-                        <Info>600,000 views 1 day ago</Info>
+                        <Title>{video.videoTitle}</Title>
+                        <Channel>{channel.name}</Channel>
+                        <Info>{video.views} views • {format(video.createdAt)}</Info>
                     </Video_description>
                 </Details>
                 </Link>
