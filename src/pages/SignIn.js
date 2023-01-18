@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import Menu from "../components/Menu";
+import axios from "axios";
+import {useDispatch} from "react-redux";
+import {loginFail, loginStart, loginSuccess} from "../redux/userSlice";
 
 const Container = styled.div`
   background-color: ${({theme}) => theme.bg};
@@ -58,20 +61,39 @@ const Button = styled.a`
 `;
 
 const SignIn = ({darkMode, setDarkMode}) => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+
+    const login = async (e) => {
+        e.preventDefault();
+        dispatch(loginStart());
+
+        await axios.post("http://localhost:8080/auth/signIn", {name, password})
+            .then(res => dispatch(loginSuccess(res.data)))
+            .catch(err => dispatch(loginFail(err)))
+    }
+
+    const register = () => {
+
+    }
+
+
     return (
         <Container>
             <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
             <ContentWrapper>
                 <SignInForm>
                     <Title>Sign in</Title>
-                    <Input placeholder={"username"}/>
-                    <Input type={"password"} placeholder={"password"}/>
-                    <Button>Sign in</Button>
+                    <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
+                    <Input type={"password"} placeholder={"password"} onChange={e => setPassword(e.target.value)}/>
+                    <Button onClick={login}>Sign in</Button>
                     <Title>or</Title>
-                    <Input placeholder={"username"}/>
-                    <Input placeholder={"email"}/>
-                    <Input type={"password"} placeholder={"password"}/>
-                    <Button>Sign up</Button>
+                    <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
+                    <Input placeholder={"email"} onChange={e => setEmail(e.target.value)}/>
+                    <Input type={"password"} placeholder={"password"} onChange={e => setPassword(e.target.value)}/>
+                    <Button onClick={register}>Sign up</Button>
                 </SignInForm>
             </ContentWrapper>
         </Container>

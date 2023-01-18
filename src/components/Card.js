@@ -12,7 +12,9 @@ const Container = styled.div`
 const Image = styled.img`
   border-radius: 12px;
   max-width: 100%;
+  width: auto;
   height: auto;
+  object-fit: cover;
 `;
 
 const Details = styled.div`

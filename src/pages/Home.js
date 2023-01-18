@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import Card from "../components/Card";
 import Menu from "../components/Menu";
+import axios from "axios";
 
 const Container = styled.div`
   height: fit-content;
@@ -12,7 +13,7 @@ const Container = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   grid-template-rows: 1fr;
   
-  @media screen and (min-width: 1380px) {
+  @media screen and (min-width: 1630px) {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
 `;
@@ -31,9 +32,8 @@ const Home = ({type, darkMode, setDarkMode}) => {
     }, [type])
 
     const fetchVideos = async () => {
-        return await fetch(`http://localhost:8080/videos/${type}`)
-            .then(res => res.json())
-            .then(data => setVideos(data));
+        return await axios.get(`http://localhost:8080/videos/${type}`)
+            .then(res => setVideos(res.data));
     }
     return (
         <ContentWrapper>

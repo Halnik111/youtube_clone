@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import {darkTheme, lightTheme} from "./utils/Theme";
 import {ThemeProvider} from "styled-components";
 import {useState} from "react";

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import LogoIcon from "../img/LogoIcon.png";
+import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
+import LogoIcon from "../../img/LogoIcon.png";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import AccountDropdown from "./AccountDropdown";
 
 const Container = styled.div`
   color: ${({theme}) => theme.text};
@@ -21,6 +24,36 @@ const Wrapper = styled.div`
   justify-content: space-between;
   height: 100%;
   padding: 0 20px;
+`;
+
+const AccountWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-right: 25px;
+`;
+
+const NotificationButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  
+  :hover {
+    background-color: ${({theme}) => theme.colorHighlight};
+  }
+`;
+
+const ChannelImage = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: aliceblue;
+  cursor: pointer;
 `;
 
 const Logo = styled.div`
@@ -85,6 +118,15 @@ const Button = styled.a`
 `;
 
 const Navbar = () => {
+    const [open, setOpen] = useState(false);
+    const {user} = useSelector(state => state.user);
+
+    const dropdown = () => {
+        if (open) {
+            return <AccountDropdown setOpen={setOpen} userImage={user.image} username={user.name} userEmail={user.email}/>
+        }
+    }
+
     return (
         <Container>
             <Wrapper>
@@ -100,13 +142,21 @@ const Navbar = () => {
                         <SearchOutlinedIcon />
                     </SearchButton>
                 </Search>
-                <Link to={"signIn"} style={{textDecoration: "none"}}>
-
+                {user ?
+                    <AccountWrapper>
+                        <NotificationButton>
+                            <NotificationsIcon fontSize={"medium"}/>
+                        </NotificationButton>
+                        <ChannelImage src={user.image} onClick={() => setOpen(!open)}></ChannelImage>
+                        {dropdown()}
+                    </AccountWrapper>
+                    :
+                    <Link to={"signIn"} style={{textDecoration: "none"}}>
                     <Button>
                         <AccountCircleOutlinedIcon/>
                         Sign in
                     </Button>
-                </Link>
+                </Link>}
             </Wrapper>
         </Container>
     );
