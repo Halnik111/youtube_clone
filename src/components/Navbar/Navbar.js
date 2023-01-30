@@ -119,7 +119,7 @@ const Button = styled.a`
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
-    const {user} = useSelector(state => state.user);
+    const {user} = useSelector(state => state.reducer.user);
 
     const dropdown = () => {
         if (open) {
@@ -156,7 +156,8 @@ const Navbar = () => {
                         <AccountCircleOutlinedIcon/>
                         Sign in
                     </Button>
-                </Link>}
+                    </Link>
+                }
             </Wrapper>
         </Container>
     );
