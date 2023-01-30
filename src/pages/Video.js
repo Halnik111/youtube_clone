@@ -44,6 +44,7 @@ const Recommendations = styled.div`
 `;
 
 const Video = () => {
+
     return (
         <Container>
             <Content>

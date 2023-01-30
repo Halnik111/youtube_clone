@@ -16,6 +16,7 @@ import SendFeedBackOutlinedIcon from '@mui/icons-material/SmsFailedOutlined';
 import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightnessOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Container = styled.div`
   background-color: ${({theme}) => theme.bg};
@@ -83,43 +84,54 @@ const Hr = styled.hr`
 
 
 const Menu = ({darkMode, setDarkMode}) => {
+    const {user} = useSelector(state => state.reducer);
+
     return (
         <Container>
             <Wrapper>
-                <Item>
-                    <HomeOutlinedIcon/>
-                    Home
-                </Item>
-                <Link to={"subscription"} style={{textDecoration: "none", color:"inherit"}}>
+                <Link to={"/"} style={{textDecoration:"none", color:"inherit"}}>
                     <Item>
-                        <SubscriptionsOutlinedIcon/>
-                        Subscriptions
+                        <HomeOutlinedIcon/>
+                        Home
                     </Item>
                 </Link>
-                <Hr/>
-                <Item>
-                    <VideoLibraryOutlinedIcon/>
-                    Library
-                </Item>
-                <Item>
-                    <HistoryOutlinedIcon/>
-                    History
-                </Item>
-                <Hr/>
-                <Login>
-                    Sign in to like videos, comment, and subscribe.
-                    <Link to={"signIn"} style={{textDecoration: "none"}}>
-                        <Button>
-                            <AccountCircleOutlinedIcon/>
-                            Sign in
-                        </Button>
-                    </Link>
-                </Login>
+                {user ?
+                    (<div>
+                        <Hr/>
+                        <Link to={"/subscription"} style={{textDecoration: "none", color:"inherit"}}>
+                            <Item>
+                                <SubscriptionsOutlinedIcon/>
+                                Subscriptions
+                            </Item>
+                        </Link>
+                        <Item>
+                            <VideoLibraryOutlinedIcon/>
+                            Library
+                        </Item>
+                        <Item>
+                            <HistoryOutlinedIcon/>
+                            History
+                        </Item>
+                    </div>)
+                    :
+                    (<div>
+                        <Hr/>
+                        <Login>
+                            Sign in to like videos, comment, and subscribe.
+                            <Link to={"/signIn"} style={{textDecoration: "none"}}>
+                                <Button>
+                                    <AccountCircleOutlinedIcon/>
+                                    Sign in
+                                </Button>
+                            </Link>
+                        </Login>
+                    </div>)
+                }
                 <Hr/>
                 <Title>
                     Explore
                 </Title>
-                <Link to={"trend"} style={{textDecoration: "none", color:"inherit"}}>
+                <Link to={"/trend"} style={{textDecoration: "none", color:"inherit"}}>
                     <Item>
                         <TrendingOutlinedIcon/>
                         Trending
