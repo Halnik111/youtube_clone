@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import styled from "styled-components";
 import AccountIcon from '@mui/icons-material/AccountBoxOutlined';
 import SettingsIcon from '@mui/icons-material/SettingsOutlined';
@@ -61,6 +61,20 @@ const Channel = styled.div`
 
 const AccountDropdown = ({userImage, username, setOpen}) => {
     const dispatch = useDispatch();
+    let dropdownRef = useRef();
+
+    useEffect(() => {
+        let handler = (e) => {
+            try {
+                if (!dropdownRef.current.contains(e.target)) {
+                    setOpen(false);
+                }
+            }
+            catch (err) {
+            }
+        }
+        document.addEventListener("mousedown", handler);
+    })
 
 
     const logOut = async () => {
@@ -81,7 +95,7 @@ const AccountDropdown = ({userImage, username, setOpen}) => {
 
     return (
         <Container>
-            <Wrapper>
+            <Wrapper ref={dropdownRef}>
                 <Channel>
                     <ChannelImage src={userImage}/>
                     <ChannelNick>{username}</ChannelNick>

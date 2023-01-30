@@ -4,6 +4,7 @@ import Menu from "../components/Menu";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {loginFail, loginStart, loginSuccess} from "../redux/userSlice";
+import {useNavigate} from "react-router-dom";
 
 const Container = styled.div`
   background-color: ${({theme}) => theme.bg};
@@ -65,14 +66,16 @@ const SignIn = ({darkMode, setDarkMode}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const login = async (e) => {
         e.preventDefault();
         dispatch(loginStart());
 
         await axios.post("http://localhost:8080/auth/signIn", {name, password})
-            .then(res => dispatch(loginSuccess(res.data)))
-            .catch(err => dispatch(loginFail(err)))
+                   .then(res => dispatch(loginSuccess(res.data)))
+                   //.then(() => navigate("/subscription"))
+                   .catch(err => dispatch(loginFail(err)))
     }
 
     const register = () => {
