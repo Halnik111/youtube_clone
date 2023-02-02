@@ -32,7 +32,7 @@ const Home = ({type, darkMode, setDarkMode}) => {
     }, [type])
 
     const fetchVideos = async () => {
-        return await axios.get(`http://localhost:8080/videos/${type}`,)
+        return await axios.get(`http://localhost:8080/videos/${type}`, {withCredentials: true})
             .then(res => setVideos(res.data))
             .catch(console.error);
     }

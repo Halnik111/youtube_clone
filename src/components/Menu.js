@@ -84,7 +84,7 @@ const Hr = styled.hr`
 
 
 const Menu = ({darkMode, setDarkMode}) => {
-    const {user} = useSelector(state => state.reducer);
+    const {user} = useSelector(state => state.reducer.user);
 
     return (
         <Container>
@@ -96,7 +96,7 @@ const Menu = ({darkMode, setDarkMode}) => {
                     </Item>
                 </Link>
                 {user ?
-                    (<div>
+                    <div>
                         <Hr/>
                         <Link to={"/subscription"} style={{textDecoration: "none", color:"inherit"}}>
                             <Item>
@@ -112,9 +112,9 @@ const Menu = ({darkMode, setDarkMode}) => {
                             <HistoryOutlinedIcon/>
                             History
                         </Item>
-                    </div>)
+                    </div>
                     :
-                    (<div>
+                    <div>
                         <Hr/>
                         <Login>
                             Sign in to like videos, comment, and subscribe.
@@ -125,7 +125,7 @@ const Menu = ({darkMode, setDarkMode}) => {
                                 </Button>
                             </Link>
                         </Login>
-                    </div>)
+                    </div>
                 }
                 <Hr/>
                 <Title>
