@@ -7,6 +7,7 @@ import LogoutIcon from '@mui/icons-material/LogoutOutlined';
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {loginStart, logout} from "../../redux/userSlice";
+import {useNavigate} from "react-router-dom";
 
 const Container = styled.div`
   background-color: ${({theme}) => theme.softColor};
@@ -62,6 +63,7 @@ const Channel = styled.div`
 const AccountDropdown = ({userImage, username, setOpen}) => {
     const dispatch = useDispatch();
     let dropdownRef = useRef();
+    const navigate = useNavigate();
 
     useEffect(() => {
         let handler = (e) => {
@@ -79,14 +81,15 @@ const AccountDropdown = ({userImage, username, setOpen}) => {
 
     const logOut = async () => {
         dispatch(loginStart())
+
         try {
 
             await axios.get("http://localhost:8080/auth/signOut")
                        .then(setOpen(false))
+                       .then(() => navigate("/"))
                        .then(dispatch(logout()))
-                .catch(err => console.log(err));
+                       .catch(err => console.log(err));
             console.log("logout")
-
         }
         catch (err) {
             return err;

@@ -72,9 +72,9 @@ const SignIn = ({darkMode, setDarkMode}) => {
         e.preventDefault();
         dispatch(loginStart());
 
-        await axios.post("http://localhost:8080/auth/signIn", {name, password})
+        await axios.post("http://localhost:8080/auth/signIn", {name, password}, {withCredentials: true})
                    .then(res => dispatch(loginSuccess(res.data)))
-                   //.then(() => navigate("/subscription"))
+                   .then(() => navigate("/subscription"))
                    .catch(err => dispatch(loginFail(err)))
     }
 
