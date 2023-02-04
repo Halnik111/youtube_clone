@@ -5,6 +5,9 @@ import axios from "axios";
 import {useDispatch} from "react-redux";
 import {loginFail, loginStart, loginSuccess} from "../redux/userSlice";
 import {useNavigate} from "react-router-dom";
+import {auth, provider} from "../firebase";
+import { signInWithPopup } from "firebase/auth";
+import GoogleLogo from "../img/Google.png";
 
 const Container = styled.div`
   background-color: ${({theme}) => theme.bg};
@@ -61,6 +64,25 @@ const Button = styled.a`
   cursor: pointer;
 `;
 
+const Google = styled.a`
+  display: flex;
+    background-color: #3ea6ff;
+  padding: 5px 15px;
+  border-radius: 20px;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+`;
+
+const Image = styled.img`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: aliceblue;
+  padding: 5px;
+`;
+
 const SignIn = ({darkMode, setDarkMode}) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -82,6 +104,23 @@ const SignIn = ({darkMode, setDarkMode}) => {
 
     }
 
+    const signInWithGoogle = async () => {
+        dispatch(loginStart());
+
+        await signInWithPopup(auth, provider)
+            .then((result) => {
+                return axios.post("/auth/google", {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    image: result.user.photoURL,
+                })
+            })
+            .then((response) => dispatch(loginSuccess(response.data)))
+            .catch(() => {
+                dispatch(loginFail());
+            });
+    }
+
 
     return (
         <Container>
@@ -92,11 +131,15 @@ const SignIn = ({darkMode, setDarkMode}) => {
                     <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
                     <Input type={"password"} placeholder={"password"} onChange={e => setPassword(e.target.value)}/>
                     <Button onClick={login}>Sign in</Button>
-                    <Title>or</Title>
+                    <Title>Sign up</Title>
                     <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
                     <Input placeholder={"email"} onChange={e => setEmail(e.target.value)}/>
                     <Input type={"password"} placeholder={"password"} onChange={e => setPassword(e.target.value)}/>
                     <Button onClick={register}>Sign up</Button>
+                    <Google onClick={signInWithGoogle}>
+                        <Image src={GoogleLogo}/>
+                        Continue with Google
+                    </Google>
                 </SignInForm>
             </ContentWrapper>
         </Container>

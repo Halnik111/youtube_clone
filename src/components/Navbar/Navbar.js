@@ -103,7 +103,7 @@ const SearchButton = styled.div`
   border-radius: 0 20px 20px 0;
 `;
 
-const Button = styled.a`
+const Button = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,10 +152,10 @@ const Navbar = () => {
                     </AccountWrapper>
                     :
                     <Link to={"signIn"} style={{textDecoration: "none"}}>
-                    <Button>
-                        <AccountCircleOutlinedIcon/>
-                        Sign in
-                    </Button>
+                        <Button>
+                            <AccountCircleOutlinedIcon/>
+                            Sign in
+                        </Button>
                     </Link>
                 }
             </Wrapper>

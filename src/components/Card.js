@@ -60,7 +60,7 @@ const Card = ({video}) => {
     const fetchChannel = async () => {
         return await fetch(`http://localhost:8080/users/find/${video.userId}`)
             .then(res => res.json())
-            .then(data => setChannel(data));
+            .then(data => setChannel(data))
     }
     return (
             <Container>
