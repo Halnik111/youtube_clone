@@ -36,12 +36,22 @@ const Home = ({type, darkMode, setDarkMode}) => {
             .then(res => setVideos(res.data))
             .catch(console.error);
     }
+
+    const displayVideos = () => {
+        if (videos.length === 0) {
+            return <div>No subscribed channels</div>
+        }
+        else {
+            return videos.map(video => <Card key={video._id} video={video}/>)
+        }
+    }
+
     return (
         <ContentWrapper>
             <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
             <Container>
                 {
-                    videos.map(video => <Card key={video._id} video={video}/>)
+                    displayVideos()
                 }
             </Container>
         </ContentWrapper>

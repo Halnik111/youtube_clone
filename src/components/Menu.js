@@ -56,6 +56,11 @@ const Item = styled.div`
   gap: 20px;
   cursor: pointer;
   padding: 7.5px 0;
+  border-radius: 20px;
+
+  :hover {
+    background-color: ${({theme}) => theme.colorHighlight};
+  }
 `;
 
 const Login = styled.div`

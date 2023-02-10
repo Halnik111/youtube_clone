@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import Menu from "../components/Menu";
 import axios from "axios";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginFail, loginStart, loginSuccess} from "../redux/userSlice";
 import {useNavigate} from "react-router-dom";
 import {auth, provider} from "../firebase";
@@ -13,10 +13,11 @@ const Container = styled.div`
   background-color: ${({theme}) => theme.bg};
   color: ${({theme}) => theme.text};
   width: 100%;
-  height: 100vh;
+  height: 100%;
 `;
 
 const ContentWrapper = styled.div`
+  margin-top: 70px;
   height: inherit;
   display: flex;
   justify-content: center;
@@ -26,6 +27,7 @@ const ContentWrapper = styled.div`
 const SignInForm = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   gap: 10px;
   padding: 20px 100px;
@@ -35,6 +37,11 @@ const SignInForm = styled.div`
 
 const Title = styled.h1`
     font-size: 24px;
+`;
+
+const Error = styled.h4`
+    color: indianred;
+  margin: 5px 0 0 0;
 `;
 
 const Input = styled.input`
@@ -89,23 +96,37 @@ const SignIn = ({darkMode, setDarkMode}) => {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {user} = useSelector(state => state.reducer);
+
+
+    useEffect(() => {
+        dispatch(loginStart())
+    }, []);
 
     const login = async (e) => {
         e.preventDefault();
-        dispatch(loginStart());
 
         await axios.post("http://localhost:8080/auth/signIn", {name, password}, {withCredentials: true})
-                   .then(res => dispatch(loginSuccess(res.data)))
-                   .then(() => navigate("/subscription"))
-                   .catch(err => dispatch(loginFail(err)))
+                   .then(res => {
+                       dispatch(loginSuccess(res.data))
+                   })
+                   .then(() => navigate("/"))
+                   .catch((err) => {
+                       dispatch(loginFail(err.response.data))
+                   })
     }
 
-    const register = () => {
+    const register = async (e) => {
+        e.preventDefault()
 
+        await axios.post("/auth/signUp", {name, email, password})
+            .then(() => login(e))
+            .catch(err => {
+
+            })
     }
 
     const signInWithGoogle = async () => {
-        dispatch(loginStart());
 
         await signInWithPopup(auth, provider)
             .then((result) => {
@@ -121,6 +142,12 @@ const SignIn = ({darkMode, setDarkMode}) => {
             });
     }
 
+    const loginError = () => {
+        if (user.error === "User not found" || user.error === "Incorrect password") {
+            return <Error>{user.error}</Error>
+        }
+    }
+
 
     return (
         <Container>
@@ -131,6 +158,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
                     <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
                     <Input type={"password"} placeholder={"password"} onChange={e => setPassword(e.target.value)}/>
                     <Button onClick={login}>Sign in</Button>
+                    {loginError()}
                     <Title>Sign up</Title>
                     <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
                     <Input placeholder={"email"} onChange={e => setEmail(e.target.value)}/>

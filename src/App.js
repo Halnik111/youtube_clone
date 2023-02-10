@@ -35,7 +35,6 @@ function App() {
                     <Main>
                         <Routes>
                             <Route path="/">
-                                //todo find better way to pass props
                                 <Route index element={<Home type={"explore"} darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
                                 <Route path={"trend"} element={<Home type={"trend"} darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
                                 <Route path={"subscription"} element={<Home type={"subscription"} darkMode={darkMode} setDarkMode={setDarkMode}/>}/>

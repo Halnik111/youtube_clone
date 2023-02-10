@@ -76,7 +76,6 @@ const Card = ({video}) => {
                 </Details>
                 </Link>
             </Container>
-
     );
 };
 
