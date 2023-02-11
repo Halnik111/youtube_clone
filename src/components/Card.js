@@ -64,7 +64,7 @@ const Card = ({video}) => {
     }
     return (
             <Container>
-                <Link to={"/video/test"} style={{textDecoration:"none"}}>
+                <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
                 <Image src={video.imageUrl}/>
                 <Details>
                     <ChannelImage src={channel.image}/>

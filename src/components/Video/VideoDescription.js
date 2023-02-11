@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
 import ShareIcon from '@mui/icons-material/ReplyOutlined';
 import SaveIcon from '@mui/icons-material/LibraryAddCheckOutlined';
-import styled from "styled-components";
+import styled, {css} from "styled-components";
+import {format} from "timeago.js";
+import axios from "axios";
+import {useDispatch} from "react-redux";
+import {likes, dislikes} from "../../redux/videoSlice";
+
+const variableColor = css`
+  color: ${(props) => (props.changeColor? "#3ea6ff" : "inherit")}
+`;
 
 const Container = styled.div`
   margin: 20px 0;
@@ -63,6 +71,8 @@ const RatingButton = styled.div`
   border-radius: 0 20px 20px 0;
   padding:6px 15px 6px 10px;
   
+  ${variableColor};
+  
   :hover {
     background-color: ${({theme}) => theme.colorFocus};
   }
@@ -72,7 +82,7 @@ const RatingButton = styled.div`
     border-radius: 20px 0 0 20px;
     padding-left: 10px;
     gap: 10px;
-  }
+  };
   
 `;
 
@@ -115,21 +125,40 @@ const Info = styled.div`
   border-radius: 10px;
 `;
 
-const VideoDescription = () => {
+const VideoDescription = ({video, channel, user}) => {
+    const [likeColor, setLikeColor] = useState(video.like.includes(user._id));
+    const [dislikeColor, setDisLikeColor] = useState(video.dislike.includes(user._id));
+    const dispatch = useDispatch();
+
+
+    const likeVideo = async () => {
+        await axios.put(`http://localhost:8080/users/like/${video._id}`,{}, {withCredentials: true});
+        dispatch(likes(user._id))
+        setLikeColor(!likeColor);
+        setDisLikeColor(false);
+    }
+
+    const dislikeVideo = async () => {
+        await axios.put(`http://localhost:8080/users/dislike/${video._id}`, {}, {withCredentials: true});
+        dispatch(dislikes(user._id))
+        setDisLikeColor(!dislikeColor);
+        setLikeColor(false)
+    }
+
     return (
         <Container>
             <Title>
-                Test Video with longer title so it doesnt look too empty
+                {video.videoTitle}
             </Title>
             <Wrapper>
             <User>
-                <ChannelImage src={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}/>
+                <ChannelImage src={channel.image}/>
                 <UserDetails>
                     <Username>
-                        Test User
+                        {channel.name}
                     </Username>
                     <Subscribers>
-                        160,000 Subscribers
+                        {channel.subscribers} Subscribers
                     </Subscribers>
                 </UserDetails>
                 <Button>
@@ -141,11 +170,17 @@ const VideoDescription = () => {
             </User>
                 <Buttons>
                     <RatingButtonWrapper>
-                        <RatingButton>
+                        <RatingButton
+                            onClick={likeVideo}
+                            changeColor={likeColor}
+                        >
                             <ThumbUpAltOutlinedIcon/>
-                            1.2K
+                            {video.like.length}
                         </RatingButton>
-                        <RatingButton>
+                        <RatingButton
+                            onClick={dislikeVideo}
+                            changeColor={dislikeColor}
+                        >
                             <ThumbDownAltOutlinedIcon/>
                         </RatingButton>
                     </RatingButtonWrapper>
@@ -156,13 +191,13 @@ const VideoDescription = () => {
                     <Button>
                         <SaveIcon/>
                         Save
-                </Button>
-            </Buttons>
+                    </Button>
+                </Buttons>
             </Wrapper>
             <Info>
-                7,950,150 views May 22, 2022
+                {video.views} Views • {format(video.createdAt)}
                 <br/>
-                asd
+                {video.videoDescription}
             </Info>
         </Container>
     );
