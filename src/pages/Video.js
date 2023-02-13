@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import styled from "styled-components";
 import RecommendationsCard from "../components/Video/RecommendationsCard";
 import VideoComments from "../components/Video/VideoComments";
@@ -51,29 +51,18 @@ const Video = () => {
     const { user } = useSelector(state => state.reducer.user);
     const { video } = useSelector(state => state.reducer.video);
     const dispatch = useDispatch();
-    const [channel, setChannel] = useState({});
     const path = useLocation().pathname.split("/")[2];
 
-    useEffect(() => {
-        dispatch(fetchStart())
+    useEffect(  () => {
+        dispatch(fetchStart)
+        const fetchVideo = async () => {
+            await axios.get(`http://localhost:8080/videos/find/${path}`, {withCredentials: true})
+                       .then(res => dispatch(fetchSuccess(res.data)))
+                       .catch(err => dispatch(fetchFail(err)));
+        }
+
         fetchVideo();
-        fetchChannel();
-        console.log(video)
-        console.log(user)
-        console.log(channel)
-    }, [path, dispatch]);
-
-    const fetchVideo = async () => {
-        return await axios.get(`http://localhost:8080/videos/find/${path}`, {withCredentials: true})
-                          .then(res => dispatch(fetchSuccess(res.data)))
-                          .catch(err => dispatch(fetchFail(err)));
-    }
-
-    const fetchChannel = async () => {
-        return await axios.get(`http://localhost:8080/users/find/${video.userId}`, {withCredentials: true})
-                          .then(res => setChannel(res.data))
-                          .catch(err => dispatch(fetchFail(err)));
-    }
+    }, [dispatch]);
 
     return (
         <Container>
@@ -84,7 +73,8 @@ const Video = () => {
                     >
                     </IFrame>
                 </VideoWrapper>
-                <VideoDescription video={video} channel={channel} user={user}/>
+                <div></div>
+                <VideoDescription video={video} user={user}/>
                 <VideoComments/>
             </Content>
             <Recommendations>

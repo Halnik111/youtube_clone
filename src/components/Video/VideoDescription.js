@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
 import ShareIcon from '@mui/icons-material/ReplyOutlined';
@@ -8,10 +8,21 @@ import {format} from "timeago.js";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {likes, dislikes} from "../../redux/videoSlice";
+import {useNavigate} from "react-router-dom";
+import {subscribeChannel} from "../../redux/userSlice";
 
-const variableColor = css`
+const blueColor = css`
   color: ${(props) => (props.changeColor? "#3ea6ff" : "inherit")}
 `;
+
+const subscribeColor = css`
+    background-color: ${(props) => (props.changeColor? "transparent" : "#CD5C5CFF")};
+    border: solid 1px #CD5C5CFF;
+  :hover {
+    background-color: ${(props) => (props.changeColor? "#CD5C5CFF" : "#b44141")};
+    border: solid 1px #b44141;
+  }
+`
 
 const Container = styled.div`
   margin: 20px 0;
@@ -45,14 +56,18 @@ const Button = styled.div`
   font-size: 14px;
   font-weight: 500;
   background-color: ${({theme}) => theme.colorHighlight};
-  
+
   :hover {
     background-color: ${({theme}) => theme.colorFocus};
   }
-  
+
+
   :nth-child(4) {
     margin-right: 20px;
+    ${subscribeColor}
   }
+
+
 `;
 
 const RatingButtonWrapper = styled.div`
@@ -71,7 +86,7 @@ const RatingButton = styled.div`
   border-radius: 0 20px 20px 0;
   padding:6px 15px 6px 10px;
   
-  ${variableColor};
+  ${blueColor};
   
   :hover {
     background-color: ${({theme}) => theme.colorFocus};
@@ -83,7 +98,6 @@ const RatingButton = styled.div`
     padding-left: 10px;
     gap: 10px;
   };
-  
 `;
 
 const Title = styled.h1`
@@ -125,24 +139,88 @@ const Info = styled.div`
   border-radius: 10px;
 `;
 
-const VideoDescription = ({video, channel, user}) => {
-    const [likeColor, setLikeColor] = useState(video.like.includes(user._id));
-    const [dislikeColor, setDisLikeColor] = useState(video.dislike.includes(user._id));
+const VideoDescription = ({video, user}) => {
+    const [likeColor, setLikeColor] = useState(false);
+    const [dislikeColor, setDisLikeColor] = useState(false);
+    const [subColor, setSubColor] = useState(false)
+    const [channel, setChannel] = useState({});
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    useEffect(  () => {
+        if (user) {
+            setLikeColor(video.like.includes(user._id))
+            setDisLikeColor(video.dislike.includes(user._id))
+
+            const fetchChannel = async () => {
+                await axios.get(`http://localhost:8080/users/find/${video.userId}`, {withCredentials: true})
+                           .then(res => {
+                               setChannel(res.data);
+                           })
+                           .catch(console.log);
+            }
+            fetchChannel();
+            setSubColor(user.subscribedUsers.includes(channel._id))
+
+        }
+    }, []);
 
     const likeVideo = async () => {
-        await axios.put(`http://localhost:8080/users/like/${video._id}`,{}, {withCredentials: true});
-        dispatch(likes(user._id))
-        setLikeColor(!likeColor);
-        setDisLikeColor(false);
+        if (user) {
+            await axios.put(`http://localhost:8080/users/like/${video._id}`,{}, {withCredentials: true});
+            dispatch(likes(user._id))
+            setLikeColor(!likeColor);
+            setDisLikeColor(false);
+        }
     }
 
     const dislikeVideo = async () => {
-        await axios.put(`http://localhost:8080/users/dislike/${video._id}`, {}, {withCredentials: true});
-        dispatch(dislikes(user._id))
-        setDisLikeColor(!dislikeColor);
-        setLikeColor(false)
+        if (user) {
+            await axios.put(`http://localhost:8080/users/dislike/${video._id}`, {}, {withCredentials: true});
+            dispatch(dislikes(user._id))
+            setDisLikeColor(!dislikeColor);
+            setLikeColor(false)
+        }
+    }
+
+    const subscribe = async () => {
+        if (user) {
+            await axios.put(`http://localhost:8080/users/sub/${channel._id}`, {}, {withCredentials: true})
+                .then(res => {
+                    dispatch(subscribeChannel(res.data.subscribedUsers))
+                    console.log(res.data)
+                });
+            setChannel({...channel, subscribers: channel.subscribers +1} )
+            setSubColor(true);
+        }
+    }
+
+    const unSubscribe = async () => {
+        if (user) {
+            await axios.put(`http://localhost:8080/users/unsub/${channel._id}`, {}, {withCredentials: true})
+                       .then(res => dispatch(subscribeChannel(res.data.subscribedUsers)));
+            setChannel({...channel, subscribers: channel.subscribers -1} )
+            setSubColor(false);
+        }
+    }
+
+    const subscribeButton = () => {
+        if (!user.subscribedUsers.includes(channel._id)) {
+            return <Button subscribeButton
+                           onClick={subscribe}
+                           changeColor={subColor}
+            >
+                Subscribe
+            </Button>
+        }
+        else {
+            return <Button subscribeButton
+                           onClick={unSubscribe}
+                           changeColor={subColor}
+            >
+                Unsubscribe
+            </Button>
+        }
     }
 
     return (
@@ -164,9 +242,11 @@ const VideoDescription = ({video, channel, user}) => {
                 <Button>
                     Join
                 </Button>
-                <Button>
-                    Subscribe
-                </Button>
+                {user ?
+                    (subscribeButton())
+                    :
+                    <Button onClick={() => navigate("/signIn")}>Sign in to Sub</Button>
+                }
             </User>
                 <Buttons>
                     <RatingButtonWrapper>

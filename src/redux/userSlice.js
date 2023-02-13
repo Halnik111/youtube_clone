@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    user: null,
+    user: {},
     loading: false,
     error: false
 };
@@ -28,9 +28,12 @@ export const userSlice = createSlice({
             state.loading = false
             state.error = false
         },
+        subscribeChannel: (state, action) => {
+            state.user.subscribedUsers = action.payload
+        },
     },
 });
 
-export const {loginStart, loginSuccess, loginFail, logout} = userSlice.actions;
+export const {loginStart, loginSuccess, loginFail, logout, subscribeChannel} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -110,7 +110,9 @@ const SignIn = ({darkMode, setDarkMode}) => {
                    .then(res => {
                        dispatch(loginSuccess(res.data))
                    })
-                   .then(() => navigate("/"))
+                   .then(() => {
+                       navigate("/")
+                   })
                    .catch((err) => {
                        dispatch(loginFail(err.response.data))
                    })
