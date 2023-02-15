@@ -38,7 +38,7 @@ export const videoSlice = createSlice({
             else {
                 state.video.dislike.splice(state.video.dislike.findIndex(userId => userId === action.payload))
             }
-        }
+        },
     },
 });
 

@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import styled from "styled-components";
-import RecommendationsCard from "../components/Video/RecommendationsCard";
 import VideoComments from "../components/Video/VideoComments";
 import VideoDescription from "../components/Video/VideoDescription";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 import {fetchFail, fetchStart, fetchSuccess} from "../redux/videoSlice";
+import VideoRecommendations from "../components/Video/VideoRecommendations";
 
 const Container = styled.div`
   width: 100%;
@@ -43,10 +43,6 @@ const IFrame = styled.iframe`
   z-index: 0;
 `;
 
-const Recommendations = styled.div`
-    
-`;
-
 const Video = () => {
     const { user } = useSelector(state => state.reducer.user);
     const { video } = useSelector(state => state.reducer.video);
@@ -60,9 +56,8 @@ const Video = () => {
                        .then(res => dispatch(fetchSuccess(res.data)))
                        .catch(err => dispatch(fetchFail(err)));
         }
-
         fetchVideo();
-    }, [dispatch]);
+    }, [dispatch, path]);
 
     return (
         <Container>
@@ -77,9 +72,7 @@ const Video = () => {
                 <VideoDescription video={video} user={user}/>
                 <VideoComments/>
             </Content>
-            <Recommendations>
-                <RecommendationsCard/>
-            </Recommendations>
+            <VideoRecommendations/>
         </Container>
     );
 };

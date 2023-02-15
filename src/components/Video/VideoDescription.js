@@ -9,20 +9,11 @@ import axios from "axios";
 import {useDispatch} from "react-redux";
 import {likes, dislikes} from "../../redux/videoSlice";
 import {useNavigate} from "react-router-dom";
-import {subscribeChannel} from "../../redux/userSlice";
+import SubscribeButton from "../SubscribeButton";
 
 const blueColor = css`
   color: ${(props) => (props.changeColor? "#3ea6ff" : "inherit")}
 `;
-
-const subscribeColor = css`
-    background-color: ${(props) => (props.changeColor? "transparent" : "#CD5C5CFF")};
-    border: solid 1px #CD5C5CFF;
-  :hover {
-    background-color: ${(props) => (props.changeColor? "#CD5C5CFF" : "#b44141")};
-    border: solid 1px #b44141;
-  }
-`
 
 const Container = styled.div`
   margin: 20px 0;
@@ -60,14 +51,6 @@ const Button = styled.div`
   :hover {
     background-color: ${({theme}) => theme.colorFocus};
   }
-
-
-  :nth-child(4) {
-    margin-right: 20px;
-    ${subscribeColor}
-  }
-
-
 `;
 
 const RatingButtonWrapper = styled.div`
@@ -142,7 +125,6 @@ const Info = styled.div`
 const VideoDescription = ({video, user}) => {
     const [likeColor, setLikeColor] = useState(false);
     const [dislikeColor, setDisLikeColor] = useState(false);
-    const [subColor, setSubColor] = useState(false)
     const [channel, setChannel] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -160,10 +142,9 @@ const VideoDescription = ({video, user}) => {
                            .catch(console.log);
             }
             fetchChannel();
-            setSubColor(user.subscribedUsers.includes(channel._id))
 
         }
-    }, []);
+    }, [channel._id, video]);
 
     const likeVideo = async () => {
         if (user) {
@@ -183,45 +164,7 @@ const VideoDescription = ({video, user}) => {
         }
     }
 
-    const subscribe = async () => {
-        if (user) {
-            await axios.put(`http://localhost:8080/users/sub/${channel._id}`, {}, {withCredentials: true})
-                .then(res => {
-                    dispatch(subscribeChannel(res.data.subscribedUsers))
-                    console.log(res.data)
-                });
-            setChannel({...channel, subscribers: channel.subscribers +1} )
-            setSubColor(true);
-        }
-    }
 
-    const unSubscribe = async () => {
-        if (user) {
-            await axios.put(`http://localhost:8080/users/unsub/${channel._id}`, {}, {withCredentials: true})
-                       .then(res => dispatch(subscribeChannel(res.data.subscribedUsers)));
-            setChannel({...channel, subscribers: channel.subscribers -1} )
-            setSubColor(false);
-        }
-    }
-
-    const subscribeButton = () => {
-        if (!user.subscribedUsers.includes(channel._id)) {
-            return <Button subscribeButton
-                           onClick={subscribe}
-                           changeColor={subColor}
-            >
-                Subscribe
-            </Button>
-        }
-        else {
-            return <Button subscribeButton
-                           onClick={unSubscribe}
-                           changeColor={subColor}
-            >
-                Unsubscribe
-            </Button>
-        }
-    }
 
     return (
         <Container>
@@ -243,7 +186,7 @@ const VideoDescription = ({video, user}) => {
                     Join
                 </Button>
                 {user ?
-                    (subscribeButton())
+                    <SubscribeButton user={user} channel={channel} setChannel={setChannel}/>
                     :
                     <Button onClick={() => navigate("/signIn")}>Sign in to Sub</Button>
                 }

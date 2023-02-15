@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import Thumbnail from "../../img/test pic.jpg";
+import axios from "axios";
+import {format} from "timeago.js";
 
 const Container = styled.div`
   display: flex;
@@ -36,15 +37,27 @@ const Info = styled.div`
   font-size: 12px;
 `
 
-const RecommendationsCard = () => {
+const RecommendationsCard = ({video}) => {
+    const [channel, setChannel] = useState({});
+
+    useEffect( () => {
+        fetchChannel();
+    }, [video.userId]);
+
+    const fetchChannel = async () => {
+        await axios.get(`http://localhost:8080/users/find/${video.userId}`)
+            .then(res => setChannel(res.data))
+            .catch(console.log);
+    }
+
     return (
-        <Link to={"/video/test"} style={{textDecoration:"none"}}>
+        <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
         <Container>
-                <Image src={Thumbnail} />
+                <Image src={video.imageUrl} />
                 <Details>
-                    <Title>Test Video</Title>
-                    <Channel>Channel Name</Channel>
-                    <Info>600,000 views 1 day ago</Info>
+                    <Title>{video.videoTitle}</Title>
+                    <Channel>{channel.name}</Channel>
+                    <Info>{video.views} views • {format(video.createdAt)}</Info>
                 </Details>
         </Container>
         </Link>
