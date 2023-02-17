@@ -68,9 +68,8 @@ const Video = () => {
                     >
                     </IFrame>
                 </VideoWrapper>
-                <div></div>
                 <VideoDescription video={video} user={user}/>
-                <VideoComments/>
+                <VideoComments video={video} user={user}/>
             </Content>
             <VideoRecommendations/>
         </Container>

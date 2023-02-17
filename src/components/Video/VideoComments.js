@@ -1,32 +1,15 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
-import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
+import CommentCard from "./CommentCard";
+import axios from "axios";
 
 const Container = styled.div`
-`;
-
-const GroupingDiv = styled.div`
 `;
 
 const CommentBar = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 10px;
-`;
-
-const CommentWrapper = styled.div`
-  display: flex;
-  gap: 5px;
-  padding-bottom: 5px;
-`;
-
-const Comment = styled.div`
-  display: flex;
-  font-size: 14px;
-  font-weight: 400;
-  margin: 20px 0;
-  gap: 20px;
 `;
 
 const NewComment = styled.div`
@@ -42,7 +25,7 @@ const ChannelImage = styled.img`
   background-color: aliceblue;
 `;
 
-const Input = styled.input`
+const Input = styled.textarea`
   border: none;
   outline: none;
   background-color: transparent;
@@ -58,6 +41,7 @@ const Input = styled.input`
     font-weight: 400;
     color: ${({theme}) => theme.textSoft};
   }
+  
 `;
 
 const Buttons = styled.div`
@@ -83,127 +67,65 @@ const Button = styled.div`
   }
 `;
 
-const RatingButton = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  border-radius: 15px;
-  gap: 4px;
-  padding: 5px;
-  
-  :hover {
-    background-color: ${({theme}) => theme.colorFocus};
-  }
-`;
+const VideoComments = ({video, user}) => {
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState("");
+    const [row, setRow] = useState(1);
 
-const DateAdded = styled.div`
-  font-weight: 400;
-  font-size: 13px;
-  color: ${({theme}) => theme.textSoft};
-`;
+    useEffect(() => {
+        fetchComments()
+    }, [video]);
 
-const ChannelName = styled.div`
-  font-weight: 600;
-  font-size: 13px;
-`;
+    const fetchComments = async () => {
+        await axios.get(`http://localhost:8080/comments/${video._id}`)
+            .then(res => setComments(res.data));
+    };
 
-const VideoComments = () => {
+    const addComment = async () => {
+        if (newComment.length >= 1) {
+            await axios.post("http://localhost:8080/comments/", {
+                userId: user._id,
+                videoID: video._id,
+                description: newComment,
+            }, {withCredentials: true})
+                .then(() => {
+                    reset();
+                    fetchComments()
+                })
+        }
+    };
+
+    const reset = () => {
+        setNewComment("");
+        document.getElementById("input").value = "";
+        setRow(1)
+    };
+
+    const addLine = (e) => {
+        if (e.key === "Enter")
+            setRow(row +1)
+    }
+
     return (
         <Container>
             <CommentBar>
-                <ChannelImage src={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}/>
+                <ChannelImage src={user.image}/>
                 <NewComment>
-                    <Input placeholder={" Add a comment.."}>
+                    <Input id={"input"} onKeyDown={addLine} rows={row} placeholder={" Add a comment.."} onChange={e => setNewComment(e.target.value)} >
                     </Input>
                     <Buttons>
-                        <Button>
+                        <Button onClick={reset}>
                             Cancel
                         </Button>
-                        <Button>
+                        <Button onClick={addComment}>
                             Comment
                         </Button>
                     </Buttons>
                 </NewComment>
             </CommentBar>
 
-            <Comment>
-                <ChannelImage src={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}/>
-                <GroupingDiv>
-                    <CommentWrapper>
-                        <ChannelName>
-                            Test User
-                        </ChannelName>
-                        <DateAdded>
-                            3 days ago
-                        </DateAdded>
-                    </CommentWrapper>
-                    Comment
-                    <GroupingDiv style={{display: "flex", gap: "5px", paddingTop: "10px"}}>
-                        <RatingButton>
-                            <ThumbUpAltOutlinedIcon/>
-                            6
-                        </RatingButton>
-                        <RatingButton>
-                            <ThumbDownAltOutlinedIcon/>
-                        </RatingButton>
-                        <RatingButton>
-                            reply
-                        </RatingButton>
-                    </GroupingDiv>
-                </GroupingDiv>
-            </Comment>
-            <Comment>
-                <ChannelImage src={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}/>
-                <GroupingDiv>
-                    <CommentWrapper>
-                        <ChannelName>
-                            Test User
-                        </ChannelName>
-                        <DateAdded>
-                            3 days ago,
-                        </DateAdded>
-                    </CommentWrapper>
-                    Comment
-                    <GroupingDiv style={{display: "flex", gap: "5px", paddingTop: "10px"}}>
-                        <RatingButton>
-                            <ThumbUpAltOutlinedIcon/>
-                            6
-                        </RatingButton>
-                        <RatingButton>
-                            <ThumbDownAltOutlinedIcon/>
-                        </RatingButton>
-                        <RatingButton>
-                            reply
-                        </RatingButton>
-                    </GroupingDiv>
-                </GroupingDiv>
-            </Comment>
-            <Comment>
-                <ChannelImage src={"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}/>
-                <GroupingDiv>
-                    <CommentWrapper>
-                        <ChannelName>
-                            Test User
-                        </ChannelName>
-                        <DateAdded>
-                            3 days ago,
-                        </DateAdded>
-                    </CommentWrapper>
-                    Comment
-                    <GroupingDiv style={{display: "flex", gap: "5px", paddingTop: "10px"}}>
-                        <RatingButton>
-                            <ThumbUpAltOutlinedIcon/>
-                            6
-                        </RatingButton>
-                        <RatingButton>
-                            <ThumbDownAltOutlinedIcon/>
-                        </RatingButton>
-                        <RatingButton>
-                            reply
-                        </RatingButton>
-                    </GroupingDiv>
-                </GroupingDiv>
-            </Comment>
+            {comments.map(comment => <CommentCard key={comment._id} comment={comment}/>)}
+
         </Container>
     );
 };
