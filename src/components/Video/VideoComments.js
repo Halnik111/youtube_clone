@@ -26,6 +26,7 @@ const ChannelImage = styled.img`
 `;
 
 const Input = styled.textarea`
+  resize: none;
   border: none;
   outline: none;
   background-color: transparent;

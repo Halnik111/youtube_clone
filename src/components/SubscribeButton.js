@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled, {css} from "styled-components";
 import axios from "axios";
 import {subscribeChannel} from "../redux/userSlice";
@@ -27,15 +27,18 @@ const Button = styled.div`
 `;
 
 const SubscribeButton = ({user, channel, setChannel}) => {
-    const [subColor, setSubColor] = useState(user.subscribedUsers.includes(channel._id));
+    const [subColor, setSubColor] = useState(false);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        setSubColor(user.subscribedUsers.includes(channel._id))
+    })
 
     const subscribe = async () => {
         if (user) {
             await axios.put(`http://localhost:8080/users/sub/${channel._id}`, {}, {withCredentials: true})
                        .then(res => {
                            dispatch(subscribeChannel(res.data.subscribedUsers))
-                           console.log(res.data)
                        });
             setChannel({...channel, subscribers: channel.subscribers +1} )
             setSubColor(true);
