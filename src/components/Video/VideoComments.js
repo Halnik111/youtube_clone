@@ -108,23 +108,28 @@ const VideoComments = ({video, user}) => {
 
     return (
         <Container>
-            <CommentBar>
-                <ChannelImage src={user.image}/>
-                <NewComment>
-                    <Input id={"input"} onKeyDown={addLine} rows={row} placeholder={" Add a comment.."} onChange={e => setNewComment(e.target.value)} >
-                    </Input>
-                    <Buttons>
-                        <Button onClick={reset}>
-                            Cancel
-                        </Button>
-                        <Button onClick={addComment}>
-                            Comment
-                        </Button>
-                    </Buttons>
-                </NewComment>
-            </CommentBar>
+            {user ?
+                <CommentBar>
+                    <ChannelImage src={user.image}/>
+                    <NewComment>
+                        <Input id={"input"} onKeyDown={addLine} rows={row} placeholder={" Add a comment.."}
+                               onChange={e => setNewComment(e.target.value)}>
+                        </Input>
+                        <Buttons>
+                            <Button onClick={reset}>
+                                Cancel
+                            </Button>
+                            <Button onClick={addComment}>
+                                Comment
+                            </Button>
+                        </Buttons>
+                    </NewComment>
+                </CommentBar>
+                :
+                <Button style={{backgroundColor: "#CD5C5CFF"}}>Sign in to comment</Button>
+            }
 
-            {comments.map(comment => <CommentCard key={comment._id} comment={comment}/>)}
+            {comments.map(comment => <CommentCard key={comment._id} currentComment={comment} user={user}/>)}
 
         </Container>
     );

@@ -1,9 +1,13 @@
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
 import React, {useEffect, useState} from "react";
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import axios from "axios";
 import {format} from "timeago.js";
+
+const blueColor = css`
+  color: ${(props) => (props.changeColor? "#3ea6ff" : "inherit")}
+`;
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +34,8 @@ const RatingButton = styled.div`
   border-radius: 15px;
   gap: 4px;
   padding: 5px;
+
+  ${blueColor};
   
   :hover {
     background-color: ${({theme}) => theme.colorFocus};
@@ -54,10 +60,18 @@ const ChannelName = styled.div`
   font-size: 13px;
 `;
 
-const CommentCard = ({comment}) => {
+const CommentCard = ({currentComment, user}) => {
+    const [comment, setComment] = useState(currentComment);
     const [channel, setChannel] = useState({});
+    const [likeColor, setLikeColor] = useState(false);
+    const [dislikeColor, setDisLikeColor] = useState(false);
 
     useEffect(() => {
+        if (user) {
+            setLikeColor(comment.likes.includes(user._id))
+            setDisLikeColor(comment.dislikes.includes(user._id))
+        }
+
         fetchChannel()
     }, [comment])
 
@@ -65,6 +79,16 @@ const CommentCard = ({comment}) => {
         await axios.get(`http://localhost:8080/users/find/${comment.userId}`)
             .then(res => setChannel(res.data))
     };
+
+    const likeComment = async () => {
+        await axios.put(`http://localhost:8080/comments/like/${comment._id}`, {}, {withCredentials: true})
+            .then(res => setComment(res.data))
+    }
+
+    const dislikeComment = async () => {
+        await axios.put(`http://localhost:8080/comments/dislike/${comment._id}`, {}, {withCredentials: true})
+                   .then(res => setComment(res.data))
+    }
 
 
     return (
@@ -81,11 +105,15 @@ const CommentCard = ({comment}) => {
                 </CommentWrapper>
                 {comment.description}
                 <GroupingDiv style={{display: "flex", gap: "5px", paddingTop: "10px"}}>
-                    <RatingButton>
+                    <RatingButton
+                        onClick={likeComment}
+                        changeColor={likeColor}>
                         <ThumbUpAltOutlinedIcon/>
-                        6
+                        {comment.likes.length}
                     </RatingButton>
-                    <RatingButton>
+                    <RatingButton
+                        onClick={dislikeComment}
+                        changeColor={dislikeColor}>
                         <ThumbDownAltOutlinedIcon/>
                     </RatingButton>
                     <RatingButton>

@@ -139,6 +139,9 @@ const SignIn = ({darkMode, setDarkMode}) => {
                 })
             })
             .then((response) => dispatch(loginSuccess(response.data)))
+            .then(() => {
+                navigate("/")
+            })
             .catch(() => {
                 dispatch(loginFail());
             });

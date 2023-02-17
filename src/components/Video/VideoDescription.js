@@ -133,6 +133,7 @@ const VideoDescription = ({video, user}) => {
         if (user) {
             setLikeColor(video.like.includes(user._id))
             setDisLikeColor(video.dislike.includes(user._id))
+        }
 
             const fetchChannel = async () => {
                 await axios.get(`http://localhost:8080/users/find/${video.userId}`, {withCredentials: true})
@@ -143,7 +144,6 @@ const VideoDescription = ({video, user}) => {
             }
             fetchChannel();
 
-        }
     }, [channel._id, video]);
 
     const likeVideo = async () => {
