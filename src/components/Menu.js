@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import styled from "styled-components";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SubscriptionsOutlinedIcon from '@mui/icons-material/SubscriptionsOutlined';
@@ -17,6 +17,8 @@ import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightne
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import Hamburger from "@mui/icons-material/DragHandleOutlined";
+import LogoIcon from "../img/LogoIcon.png";
 
 const Container = styled.div`
   background-color: ${({theme}) => theme.bg};
@@ -24,12 +26,12 @@ const Container = styled.div`
   font-size: 14px;
   height: 100%;
   position: fixed;
-  margin-top: 71px;
   top: 0;
+  z-index: 2;
 `;
 
 const Wrapper = styled.div`
-  padding: 0 25px;
+  padding: 0 20px;
   width: 190px;
   max-height: calc(110vh - 9rem);
   overflow-y: scroll;
@@ -42,6 +44,19 @@ const Wrapper = styled.div`
     background-color: ${({theme}) => theme.scrollbarColor};
     border-radius: 5px;
   }
+`;
+
+const Logo = styled.div`
+  display: flex;
+  align-items: center; 
+  gap: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  height: 56px;
+`;
+
+const Img = styled.img`
+  height: 40px;
 `;
 
 const Title = styled.div`
@@ -88,12 +103,35 @@ const Hr = styled.hr`
 `;
 
 
-const Menu = ({darkMode, setDarkMode}) => {
+const Menu = ({darkMode, setDarkMode, setOpenMenu}) => {
     const {user} = useSelector(state => state.reducer.user);
+    let menuRef = useRef();
+
+    useEffect(() => {
+        let handler = (e) => {
+            try {
+                if (!menuRef.current.contains(e.target)) {
+                    setOpenMenu(false);
+                }
+            }
+            catch (err) {
+            }
+        }
+        document.addEventListener("mousedown", handler);
+    })
 
     return (
         <Container>
-            <Wrapper>
+            <Wrapper ref={menuRef}>
+                <Logo>
+                    <Hamburger fontSize={"large"} onClick={() => setOpenMenu(false)}/>
+                    <Link to={"/"} style={{textDecoration:"none", color:"inherit"}}>
+                        <Logo>
+                            <Img src={LogoIcon}/>
+                            Youtube
+                        </Logo>
+                    </Link>
+                </Logo>
                 <Link to={"/"} style={{textDecoration:"none", color:"inherit"}}>
                     <Item>
                         <HomeOutlinedIcon/>

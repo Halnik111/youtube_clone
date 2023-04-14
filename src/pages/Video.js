@@ -5,7 +5,7 @@ import VideoDescription from "../components/Video/VideoDescription";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
-import {fetchFail, fetchStart, fetchSuccess} from "../redux/videoSlice";
+import {fetchFail, fetchStart, fetchSuccess, views} from "../redux/videoSlice";
 import VideoRecommendations from "../components/Video/VideoRecommendations";
 
 const Container = styled.div`
@@ -59,6 +59,14 @@ const Video = () => {
         fetchVideo();
     }, [dispatch, path]);
 
+    useEffect(() => {
+        const viewVideo = async () => {
+            await axios.put(`http://localhost:8080/videos/view/${path}`, {withCredentials: true})
+                       .then(res => dispatch(views(res.data)));
+        }
+        viewVideo();
+    }, [])
+
     return (
         <Container>
             <Content>
@@ -68,7 +76,7 @@ const Video = () => {
                     >
                     </IFrame>
                 </VideoWrapper>
-                <VideoDescription video={video} user={user}/>
+                <VideoDescription video={video} user={user} path={path}/>
                 <VideoComments video={video} user={user}/>
             </Content>
             <VideoRecommendations/>

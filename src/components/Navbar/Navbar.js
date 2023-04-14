@@ -7,6 +7,8 @@ import LogoIcon from "../../img/LogoIcon.png";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import AccountDropdown from "./AccountDropdown";
+import Hamburger from '@mui/icons-material/DragHandleOutlined';
+
 
 const Container = styled.div`
   color: ${({theme}) => theme.text};
@@ -117,7 +119,9 @@ const Button = styled.div`
   cursor: pointer;
 `;
 
-const Navbar = () => {
+
+
+const Navbar = ({openMenu, setOpenMenu}) => {
     const [open, setOpen] = useState(false);
     const {user} = useSelector(state => state.reducer.user);
 
@@ -130,16 +134,18 @@ const Navbar = () => {
     return (
         <Container>
             <Wrapper>
-                <Link to={"/"} style={{textDecoration:"none", color:"inherit"}}>
-                    <Logo>
-                        <Img src={LogoIcon}/>
-                        Youtube
-                    </Logo>
-                </Link>
+                <Logo>
+                    <Hamburger fontSize={"large"} onClick={() => setOpenMenu(!openMenu)}/>
+                    <Link to={"/"} style={{textDecoration:"none", color:"inherit"}}>
+                        <Logo>
+                            <Img src={LogoIcon}/>
+                        </Logo>
+                    </Link>
+                </Logo>
                 <Search>
                     <Input placeholder={'Search'}></Input>
                     <SearchButton>
-                        <SearchOutlinedIcon />
+                        <SearchOutlinedIcon/>
                     </SearchButton>
                 </Search>
                 {user ?

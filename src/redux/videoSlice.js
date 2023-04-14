@@ -39,9 +39,12 @@ export const videoSlice = createSlice({
                 state.video.dislike.splice(state.video.dislike.findIndex(userId => userId === action.payload))
             }
         },
+        views:(state, action) => {
+            state.video.views = action.payload;
+        }
     },
 });
 
-export const {fetchStart, fetchSuccess, fetchFail, likes, dislikes} = videoSlice.actions;
+export const {fetchStart, fetchSuccess, fetchFail, likes, dislikes, views} = videoSlice.actions;
 
 export default videoSlice.reducer;

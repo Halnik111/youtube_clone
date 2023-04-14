@@ -11,6 +11,7 @@ import {
 import Home from "./pages/Home";
 import Video from "./pages/Video";
 import SignIn from "./pages/SignIn";
+import Menu from "./components/Menu";
 
 const Container = styled.div `
   background-color: ${({theme}) => theme.bg};
@@ -26,12 +27,20 @@ const Main = styled.div `
 
 function App() {
     const [darkMode, setDarkMode] = useState(true);
+    const [openMenu, setOpenMenu] = useState(false);
+
+    const menu = () => {
+        if (openMenu) {
+            return <Menu darkMode={darkMode} setDarkMode={setDarkMode} setOpenMenu={setOpenMenu}/>;
+        }
+    }
 
     return (
         <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
             <BrowserRouter>
                 <Container>
-                    <Navbar/>
+                    <Navbar openMenu={openMenu} setOpenMenu={setOpenMenu}/>
+                    {menu()}
                     <Main>
                         <Routes>
                             <Route path="/">
