@@ -4,7 +4,6 @@ import ThumbDownAltOutlinedIcon from "@mui/icons-material/ThumbDownAltOutlined";
 import ShareIcon from '@mui/icons-material/ReplyOutlined';
 import SaveIcon from '@mui/icons-material/LibraryAddCheckOutlined';
 import styled, {css} from "styled-components";
-import {format} from "timeago.js";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {likes, dislikes} from "../../redux/videoSlice";
@@ -118,7 +117,7 @@ const Info = styled.div`
   background-color: ${({theme}) => theme.colorHighlight};
   padding: 15px;
   margin-top: 20px;
-  height: 80px;
+  min-height: 80px;
   border-radius: 10px;
 `;
 
@@ -128,6 +127,9 @@ const VideoDescription = ({video, user}) => {
     const [channel, setChannel] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    const date = new Date(video.createdAt);
+
 
     useEffect(  () => {
         if (user) {
@@ -218,9 +220,14 @@ const VideoDescription = ({video, user}) => {
                 </Buttons>
             </Wrapper>
             <Info>
-                {video.views} Views • {format(video.createdAt)}
-                <br/>
-                {video.videoDescription}
+                <div>
+                    {video.views} Views • {date.toLocaleDateString('en-US', dateOptions)}
+                    <br/>
+                    {video.videoDescription}
+                </div>
+                <div style={{marginTop: '30px', color: '#3ea6ff'}}>
+                    #{video.tags.join(' #')}
+                </div>
             </Info>
         </Container>
     );

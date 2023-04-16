@@ -60,6 +60,7 @@ const ChannelImage = styled.img`
 const Logo = styled.div`
   display: flex;
   align-items: center; 
+  cursor: pointer;
   gap: 5px;
   font-weight: bold;
   font-size: 18px;
@@ -100,6 +101,7 @@ const SearchButton = styled.div`
   justify-content: center;
   height: 40px;
   width: 80px;
+  cursor: pointer;
   background-color: ${({theme}) => theme.softColor};
   border-radius: 0 20px 20px 0;
 `;
