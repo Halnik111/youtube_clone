@@ -17,8 +17,9 @@ import SettingsBrightnessOutlinedIcon from '@mui/icons-material/SettingsBrightne
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
-import Hamburger from "@mui/icons-material/DragHandleOutlined";
 import LogoIcon from "../img/LogoIcon.png";
+import CloseMenuIcon from '@mui/icons-material/CloseOutlined';
+
 
 const Container = styled.div`
   background-color: ${({theme}) => theme.bg};
@@ -124,7 +125,7 @@ const Menu = ({darkMode, setDarkMode, setOpenMenu}) => {
         <Container>
             <Wrapper ref={menuRef}>
                 <Logo>
-                    <Hamburger fontSize={"large"} onClick={() => setOpenMenu(false)}/>
+                    <CloseMenuIcon fontSize={"large"} onClick={() => setOpenMenu(false)}/>
                     <Link to={"/"} style={{textDecoration:"none", color:"inherit"}}>
                         <Logo>
                             <Img src={LogoIcon}/>

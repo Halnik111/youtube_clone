@@ -62,7 +62,7 @@ const Video = () => {
     useEffect(() => {
         const viewVideo = async () => {
             await axios.put(`http://localhost:8080/videos/view/${path}`, {withCredentials: true})
-                       .then(res => dispatch(views(res.data)));
+                       .then(res => dispatch(views(res.data.views)));
         }
         viewVideo();
     }, [])

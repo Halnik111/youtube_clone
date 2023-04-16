@@ -4,11 +4,10 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
 import LogoIcon from "../../img/LogoIcon.png";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import AccountDropdown from "./AccountDropdown";
 import Hamburger from '@mui/icons-material/DragHandleOutlined';
-
 
 const Container = styled.div`
   color: ${({theme}) => theme.text};
@@ -123,13 +122,17 @@ const Button = styled.div`
 
 const Navbar = ({openMenu, setOpenMenu}) => {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate()
     const {user} = useSelector(state => state.reducer.user);
+    const [searchInput, setSearchInput] = useState('');
 
     const dropdown = () => {
         if (open) {
             return <AccountDropdown setOpen={setOpen} userImage={user.image} username={user.name} userEmail={user.email}/>
         }
     }
+
+
 
     return (
         <Container>
@@ -143,8 +146,8 @@ const Navbar = ({openMenu, setOpenMenu}) => {
                     </Link>
                 </Logo>
                 <Search>
-                    <Input placeholder={'Search'}></Input>
-                    <SearchButton>
+                    <Input placeholder={'Search'} onChange={(e) => {setSearchInput(e.target.value)}}/>
+                    <SearchButton onClick={() => {navigate(`/search?tags=${searchInput}`)}}>
                         <SearchOutlinedIcon/>
                     </SearchButton>
                 </Search>

@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import Video from "./pages/Video";
 import SignIn from "./pages/SignIn";
 import Menu from "./components/Menu";
+import Search from "./pages/Search";
 
 const Container = styled.div `
   background-color: ${({theme}) => theme.bg};
@@ -47,6 +48,7 @@ function App() {
                                 <Route index element={<Home type={"explore"} darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
                                 <Route path={"trend"} element={<Home type={"trend"} darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
                                 <Route path={"subscription"} element={<Home type={"subscription"} darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
+                                <Route path={"search"} element={<Search darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
                                 <Route path="video">
                                     <Route path=":id" element={<Video/>}/>
                                 </Route>

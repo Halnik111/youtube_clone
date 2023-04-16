@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import Card from "../components/Card";
 import axios from "axios";
+import {useLocation} from "react-router-dom";
+import Card from "../components/Card";
 
 const Container = styled.div`
   height: fit-content;
@@ -10,7 +11,7 @@ const Container = styled.div`
   margin: 0 55px;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   grid-template-rows: 1fr;
-  
+
   @media screen and (min-width: 1650px) {
     grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   }
@@ -21,39 +22,25 @@ const ContentWrapper =  styled.div`
   margin-top: 80px;
 `;
 
-
-const Home = ({type}) => {
+const Search = () => {
     const [videos, setVideos] = useState([]);
+    const searchInput = useLocation().search;
 
     useEffect(() => {
+        const fetchVideos = async () => {
+            await axios.get(`http://localhost:8080/videos/search${searchInput}`, {withCredentials: true})
+                .then(res => setVideos(res.data));
+        }
         fetchVideos();
-    }, [type])
-
-    const fetchVideos = async () => {
-            return await axios.get(`http://localhost:8080/videos/${type}`, {withCredentials: true})
-                              .then(res => setVideos(res.data))
-                              .catch(console.error);
-    }
-
-    const displayVideos = () => {
-        if (videos.length === 0) {
-            return <div>No subscribed channels</div>
-        }
-        else {
-            return videos.map(video => <Card key={video._id} video={video}/>)
-        }
-    }
+    }, [searchInput])
 
     return (
         <ContentWrapper>
             <Container>
-                {
-                    displayVideos()
-                }
+                {videos.map(video => <Card key={video._id} video={video}/>)}
             </Container>
         </ContentWrapper>
-
     );
 };
 
-export default Home;
+export default Search;
