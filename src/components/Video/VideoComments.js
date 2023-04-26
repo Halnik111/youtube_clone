@@ -129,7 +129,6 @@ const VideoComments = ({video, user}) => {
                 :
                 <Button style={{backgroundColor: "#CD5C5CFF"}}>Sign in to comment</Button>
             }
-
             {comments.map(comment => <CommentCard key={comment._id} currentComment={comment} user={user} fetchComments={fetchComments}/>)}
 
         </Container>

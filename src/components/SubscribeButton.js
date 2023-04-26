@@ -17,6 +17,7 @@ const Button = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
+  height: 25px;
   border-radius: 20px;
   padding: 6px 15px;
   font-size: 14px;

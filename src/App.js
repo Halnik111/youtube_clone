@@ -13,6 +13,7 @@ import Video from "./pages/Video";
 import SignIn from "./pages/SignIn";
 import Menu from "./components/Menu";
 import Search from "./pages/Search";
+import Account from "./pages/Account";
 
 const Container = styled.div `
   background-color: ${({theme}) => theme.bg};
@@ -53,6 +54,9 @@ function App() {
                                     <Route path=":id" element={<Video/>}/>
                                 </Route>
                                 <Route path={"signIn"} element={<SignIn darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
+                                <Route path={"account"}>
+                                    <Route path=":id" element={<Account/>}/>
+                                </Route>
                             </Route>
                         </Routes>
                     </Main>

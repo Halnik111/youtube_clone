@@ -5,7 +5,7 @@ import SettingsIcon from '@mui/icons-material/SettingsOutlined';
 import UploadIcon from '@mui/icons-material/VideoCameraFrontOutlined';
 import LogoutIcon from '@mui/icons-material/LogoutOutlined';
 import axios from "axios";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginStart, logout} from "../../redux/userSlice";
 import {useNavigate} from "react-router-dom";
 
@@ -64,6 +64,7 @@ const AccountDropdown = ({userImage, username, setOpen}) => {
     const dispatch = useDispatch();
     let dropdownRef = useRef();
     const navigate = useNavigate();
+    const {user} = useSelector(state => state.reducer.user);
 
     useEffect(() => {
         let handler = (e) => {
@@ -104,7 +105,7 @@ const AccountDropdown = ({userImage, username, setOpen}) => {
                     <ChannelNick>{username}</ChannelNick>
                 </Channel>
                 <Hr />
-                <Item>
+                <Item onClick={() =>  navigate(`/account/${user._id}`)}>
                     <AccountIcon />
                     Your Account
                 </Item>
