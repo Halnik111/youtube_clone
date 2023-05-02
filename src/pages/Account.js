@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import axios from "axios";
 import SubscribeButton from "../components/SubscribeButton";
-import Card from "../components/Card";
+import AccountVideos from "../components/Account/AccountVideos";
+import AccountChannels from "../components/Account/AccountChannels";
+import AccountAbout from "../components/Account/AccountAbout";
+import AccountLibrary from "../components/Account/AccountLibrary";
 
 
 const Container = styled.div`
@@ -14,24 +17,10 @@ const Container = styled.div`
   
 `;
 
-const VideoLibrary = styled.div`
-  height: fit-content;
-  display: grid;
-  gap: 20px;
-  margin: 0 55px;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  grid-template-rows: 1fr;
-
-  @media screen and (min-width: 1650px) {
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-  }
-`;
-
 const AccountBanner = styled.div`
   display: flex;
   justify-content: space-around;
   height: 200px;
-  border-bottom: 2px solid ${({theme}) => theme.softColor};
 `;
 
 const AccountWrapper = styled.div`
@@ -93,16 +82,45 @@ const Button = styled.div`
   }
 `;
 
+const NavigationButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  border-bottom: 2px solid ${({theme}) => theme.softColor};
+`;
+
+const NavigationButton = styled.div`
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 400;
+  box-sizing: content-box;
+  color: ${({theme}) => theme.textSoft};
+  margin: 0;
+  padding: 0 25px;
+  border-bottom: 3px solid transparent;
+  
+  :hover {
+    color: ${({theme}) => theme.bgOpposite};
+  }
+  
+  :nth-child(${(props) => props.activeSection}) {
+    color: ${({theme}) => theme.bgOpposite};
+    border-bottom: 3px solid ${({theme}) => theme.bgOpposite};
+  }
+`;
+
 
 const Account = () => {
     const [channel, setChannel] = useState({});
     const { user } = useSelector(state => state.reducer.user);
     const path = useLocation().pathname.split("/")[2];
-    const [videos, setVideos] = useState([]);
+    let location = useLocation();
+    const navigate = useNavigate();
+    const [section, setSection] = useState('');
+
 
     useEffect(() => {
         fetchChannel();
-        fetchVideos();
+        setSection(location.state.toString())
     },[path]);
 
     const fetchChannel = async () => {
@@ -113,13 +131,6 @@ const Account = () => {
                    .catch(console.log);
     }
 
-    const fetchVideos = async () => {
-        await axios.get(`http://localhost:8080/videos/channel/${path}`, {withCredentials: true})
-                   .then(res => {
-                       setVideos(res.data);
-                   })
-                   .catch(console.log);
-    }
     const actionButtons = () => {
         if (user?._id === path) {
             return (
@@ -143,35 +154,51 @@ const Account = () => {
         }
     }
 
-    const displayVideos = () => {
-            return videos?.map(video => <Card key={video._id} video={video}/>)
+    const displayContent = () => {
+        switch (section) {
+            case "1": return <AccountVideos path={path}/>
+            case "2": return <AccountChannels channel={channel}/>
+            case "3": return <AccountLibrary channel={channel}/>
+            case "4": return <AccountAbout channel={channel}/>
+        }
     }
 
 
     return (
         <Container>
             <AccountBanner>
-                <AccountWrapper>
-                    <ChannelImage src={channel.image?.replace("s96-c", "s240-c", true)}/>
-                    <ChannelDetails>
-                        <Username>
-                            {channel.name}
-                        </Username>
-                        <Info>
-                            {channel.email} • {channel.subscribers} Subscribers • 0 Videos
-                        </Info>
-                        <About>
-                            Nikolas Halo about section testing font size, esthetics and positioning.
-                        </About>
-                    </ChannelDetails>
-                </AccountWrapper>
+                    <AccountWrapper>
+                        <ChannelImage src={channel.image?.replace("s96-c", "s240-c", true)}/>
+                        <ChannelDetails>
+                            <Username>
+                                {channel.name}
+                            </Username>
+                            <Info>
+                                {channel.email} • {channel.subscribers} Subscribers • 0 Videos
+                            </Info>
+                            <About>
+                                Nikolas Halo about section testing font size, esthetics and positioning.
+                            </About>
+                        </ChannelDetails>
+                    </AccountWrapper>
                 {actionButtons()}
             </AccountBanner>
-            <VideoLibrary>
-                {
-                    displayVideos()
-                }
-            </VideoLibrary>
+            <NavigationButtons>
+                <NavigationButton activeSection={section} onClick={() => setSection("1")}>
+                    Home
+                </NavigationButton>
+                <NavigationButton activeSection={section} onClick={() => setSection("2")}>
+                    Channels
+                </NavigationButton>
+                <NavigationButton activeSection={section} onClick={() => setSection("3")}>
+                    Playlists
+                </NavigationButton>
+                <NavigationButton activeSection={section} onClick={() => setSection("4")}>
+                    About
+                </NavigationButton>
+            </NavigationButtons>
+
+            {displayContent()}
         </Container>
     );
 };

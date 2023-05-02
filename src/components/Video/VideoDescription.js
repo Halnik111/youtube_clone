@@ -94,6 +94,7 @@ const ChannelImage = styled.img`
   height: 36px;
   border-radius: 50%;
   background-color: aliceblue;
+  cursor: pointer;
 `;
 
 const UserDetails = styled.div`
@@ -175,8 +176,8 @@ const VideoDescription = ({video, user}) => {
             </Title>
             <Wrapper>
             <User>
-                <ChannelImage src={channel.image}/>
-                <UserDetails>
+                <ChannelImage src={channel.image} onClick={() => navigate(`/account/${channel._id}`, {state: 1})}/>
+                <UserDetails onClick={() => navigate(`/account/${channel._id}`, {state: 1})}>
                     <Username>
                         {channel.name}
                     </Username>

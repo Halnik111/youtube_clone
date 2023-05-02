@@ -134,6 +134,7 @@ const TextArea = styled.textarea`
     color: ${({theme}) => theme.textSoft};
   }
 `;
+
 const PopupButtons = styled.div`
   margin-top: 15px;
   display: flex;

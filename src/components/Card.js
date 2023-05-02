@@ -67,7 +67,7 @@ const Card = ({video}) => {
                 <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
                 <Image src={video.imageUrl}/>
                 <Details>
-                    <ChannelImage src={channel.image}/>
+                    <ChannelImage src={channel.image} />
                     <Video_description>
                         <Title>{video.videoTitle}</Title>
                         <Channel>{channel.name}</Channel>

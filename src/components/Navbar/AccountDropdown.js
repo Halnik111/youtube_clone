@@ -105,7 +105,7 @@ const AccountDropdown = ({userImage, username, setOpen}) => {
                     <ChannelNick>{username}</ChannelNick>
                 </Channel>
                 <Hr />
-                <Item onClick={() =>  navigate(`/account/${user._id}`)}>
+                <Item onClick={() =>  navigate(`/account/${user._id}`, {state: 1})}>
                     <AccountIcon />
                     Your Account
                 </Item>

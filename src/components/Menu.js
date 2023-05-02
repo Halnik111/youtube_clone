@@ -148,10 +148,12 @@ const Menu = ({darkMode, setDarkMode, setOpenMenu}) => {
                                 Subscriptions
                             </Item>
                         </Link>
-                        <Item>
-                            <VideoLibraryOutlinedIcon/>
-                            Library
-                        </Item>
+                        <Link to={{pathname: `/account/${user._id}`}} state={"3"} style={{textDecoration: "none", color:"inherit"}}>
+                            <Item>
+                                <VideoLibraryOutlinedIcon/>
+                                Library
+                            </Item>
+                        </Link>
                         <Item>
                             <HistoryOutlinedIcon/>
                             History
