@@ -49,7 +49,7 @@ const Info = styled.div`
   font-size: 14px;
 `
 
-const Card = ({video}) => {
+const Card = ({video, playlist}) => {
     const [channel, setChannel] = useState({});
 
 
@@ -64,7 +64,7 @@ const Card = ({video}) => {
     }
     return (
             <Container>
-                <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
+                <Link to={{pathname: `/video/${video._id}`}} state={playlist} style={{textDecoration:"none"}}>
                 <Image src={video.imageUrl}/>
                 <Details>
                     <ChannelImage src={channel.image} />

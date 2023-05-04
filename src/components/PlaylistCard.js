@@ -67,7 +67,7 @@ const PlaylistCard = ({playlist}) => {
         }
         else {
             return (
-                videos.map(video => <Card key={video._id} video={video}/>)
+                videos.map(video => <Card key={video._id} video={video} playlist={playlist}/>)
             )
         }
     }

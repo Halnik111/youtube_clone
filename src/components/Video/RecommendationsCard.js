@@ -37,7 +37,7 @@ const Info = styled.div`
   font-size: 12px;
 `
 
-const RecommendationsCard = ({video}) => {
+const RecommendationsCard = ({video, playlist}) => {
     const [channel, setChannel] = useState({});
 
     useEffect( () => {
@@ -51,7 +51,7 @@ const RecommendationsCard = ({video}) => {
     }
 
     return (
-        <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
+        <Link to={{pathname: `/video/${video._id}`}} state={playlist} style={{textDecoration:"none"}}>
         <Container>
                 <Image src={video.imageUrl} />
                 <Details>

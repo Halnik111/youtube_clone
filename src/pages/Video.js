@@ -7,6 +7,7 @@ import {useLocation} from "react-router-dom";
 import axios from "axios";
 import {fetchFail, fetchStart, fetchSuccess, views} from "../redux/videoSlice";
 import VideoRecommendations from "../components/Video/VideoRecommendations";
+import PlaylistSidebar from "../components/Video/PlaylistSidebar";
 
 const Container = styled.div`
   width: 100%;
@@ -48,6 +49,7 @@ const Video = () => {
     const { video } = useSelector(state => state.reducer.video);
     const dispatch = useDispatch();
     const path = useLocation().pathname.split("/")[2];
+    let location = useLocation();
 
     useEffect(  () => {
         dispatch(fetchStart)
@@ -79,7 +81,11 @@ const Video = () => {
                 <VideoDescription video={video} user={user} path={path}/>
                 <VideoComments video={video} user={user}/>
             </Content>
-            <VideoRecommendations/>
+            {location.state ?
+                <PlaylistSidebar playlist={location.state}/>
+                :
+                <VideoRecommendations/>
+            }
         </Container>
     );
 };
