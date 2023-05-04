@@ -20,6 +20,7 @@ const ContentWrapper = styled.div`
   margin-top: 70px;
   height: inherit;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -27,12 +28,18 @@ const ContentWrapper = styled.div`
 const SignInForm = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   gap: 10px;
   padding: 20px 100px;
   background-color: ${({theme}) => theme.bgLighter};
   border: 1px solid ${({theme}) => theme.softColor};
+`;
+
+const Form = styled.form`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const Title = styled.h1`
@@ -54,7 +61,7 @@ const Input = styled.input`
   
 `;
 
-const Button = styled.a`
+const Button = styled.input`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,7 +115,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
 
         await axios.post("http://localhost:8080/auth/signIn", {name, password}, {withCredentials: true})
                    .then(res => {
-                       dispatch(loginSuccess(res.data))
+                       dispatch(loginSuccess(res.data));
                    })
                    .then(() => {
                        navigate("/")
@@ -116,6 +123,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
                    .catch((err) => {
                        dispatch(loginFail(err.response.data))
                    })
+
     }
 
     const register = async (e) => {
@@ -123,9 +131,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
 
         await axios.post("/auth/signUp", {name, email, password})
             .then(() => login(e))
-            .catch(err => {
-
-            })
+            .catch(console.log);
     }
 
     const signInWithGoogle = async () => {
@@ -159,16 +165,20 @@ const SignIn = ({darkMode, setDarkMode}) => {
             <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
             <ContentWrapper>
                 <SignInForm>
-                    <Title>Sign in</Title>
-                    <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
-                    <Input type={"password"} placeholder={"password"} onChange={e => setPassword(e.target.value)}/>
-                    <Button onClick={login}>Sign in</Button>
-                    {loginError()}
-                    <Title>Sign up</Title>
-                    <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
-                    <Input placeholder={"email"} onChange={e => setEmail(e.target.value)}/>
-                    <Input type={"password"} placeholder={"password"} onChange={e => setPassword(e.target.value)}/>
-                    <Button onClick={register}>Sign up</Button>
+                    <Form>
+                        <Title>Sign in</Title>
+                        <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
+                        <Input type={"password"} placeholder={"password"} onChange={e => setPassword(e.target.value)}/>
+                        <Button type={"submit"} value={"Sign in"} onClick={login}/>
+                        {loginError()}
+                    </Form>
+                    <Form>
+                        <Title>Sign up</Title>
+                        <Input placeholder={"username"} onChange={e => setName(e.target.value)}/>
+                        <Input placeholder={"email"} onChange={e => setEmail(e.target.value)}/>
+                        <Input type={"password"} placeholder={"password"} onChange={e => setPassword(e.target.value)}/>
+                        <Button type={"submit"} value={"Sign up"} onClick={register}/>
+                    </Form>
                     <Google onClick={signInWithGoogle}>
                         <Image src={GoogleLogo}/>
                         Continue with Google

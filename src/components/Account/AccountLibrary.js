@@ -103,6 +103,7 @@ const AccountLibrary = ({channel}) => {
 
     const createPlaylist = async () => {
         await axios.post(`http://localhost:8080/playlists/`, {name: playlistName}, {withCredentials: true})
+            .then(res => setPlaylists([...playlists, res.data]));
     }
 
     const displayPlaylists = () => {
@@ -121,7 +122,7 @@ const AccountLibrary = ({channel}) => {
                     <PopupWrapper>
                         <TextArea placeholder={"Playlist name.."} onChange={e => setPlaylistName(e.target.value)}>
                         </TextArea>
-                        <Button onClick={() => createPlaylist()}>Create Playlist</Button>
+                        <Button onClick={() => createPlaylist().then(() => setOpenPopup(false))}>Create Playlist</Button>
                     </PopupWrapper>
                 </Popup>
             )

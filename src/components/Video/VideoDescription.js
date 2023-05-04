@@ -9,6 +9,7 @@ import {useDispatch} from "react-redux";
 import {likes, dislikes} from "../../redux/videoSlice";
 import {useNavigate} from "react-router-dom";
 import SubscribeButton from "../SubscribeButton";
+import PlaylistPopup from "../PlaylistPopup/PlaylistPopup";
 
 const blueColor = css`
   color: ${(props) => (props.changeColor? "#3ea6ff" : "inherit")}
@@ -43,6 +44,7 @@ const Button = styled.div`
   align-items: center;
   border-radius: 20px;
   padding: 6px 15px;
+  position: relative;
   font-size: 14px;
   font-weight: 500;
   background-color: ${({theme}) => theme.colorHighlight};
@@ -121,7 +123,6 @@ const Info = styled.div`
   min-height: 80px;
   border-radius: 10px;
 `;
-
 const VideoDescription = ({video, user}) => {
     const [likeColor, setLikeColor] = useState(false);
     const [dislikeColor, setDisLikeColor] = useState(false);
@@ -130,25 +131,35 @@ const VideoDescription = ({video, user}) => {
     const navigate = useNavigate();
     const dateOptions = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
     const date = new Date(video.createdAt);
-
+    const [openPopup, setOpenPopup] = useState(false);
 
     useEffect(  () => {
         if (user) {
             setLikeColor(video.like.includes(user._id))
             setDisLikeColor(video.dislike.includes(user._id))
         }
+        fetchChannel();
 
-            const fetchChannel = async () => {
-                await axios.get(`http://localhost:8080/users/find/${video.userId}`, {withCredentials: true})
-                           .then(res => {
-                               setChannel(res.data);
-                           })
-                           .catch(console.log);
+        let handler = (e) => {
+            try {
+                if (!popupRef.current.contains(e.target)) {
+                    setOpenPopup(false);
+                }
             }
-            fetchChannel();
-
+            catch (err) {
+            }
+        }
+        document.addEventListener("mousedown", handler);
     }, [channel._id, video]);
 
+
+    const fetchChannel = async () => {
+        await axios.get(`http://localhost:8080/users/find/${video.userId}`, {withCredentials: true})
+                   .then(res => {
+                       setChannel(res.data);
+                   })
+                   .catch(console.log);
+    }
     const likeVideo = async () => {
         if (user) {
             await axios.put(`http://localhost:8080/users/like/${video._id}`,{}, {withCredentials: true});
@@ -167,7 +178,13 @@ const VideoDescription = ({video, user}) => {
         }
     }
 
-
+    const popup = () => {
+        if (openPopup) {
+            return (
+                <PlaylistPopup setOpenPopup={setOpenPopup} openPopup={openPopup}/>
+            )
+        }
+    }
 
     return (
         <Container>
@@ -214,9 +231,10 @@ const VideoDescription = ({video, user}) => {
                         <ShareIcon/>
                         Share
                     </Button>
-                    <Button>
+                    <Button onClick={() => setOpenPopup(true)}>
                         <SaveIcon/>
                         Save
+                        {popup()}
                     </Button>
                 </Buttons>
             </Wrapper>

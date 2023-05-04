@@ -1,0 +1,54 @@
+import React, {useEffect, useState} from 'react';
+import styled from "styled-components";
+import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {updatePlaylist} from "../../redux/playlistsSlice";
+
+const Container = styled.div`
+    display: flex;
+  width: 100%;
+  padding: 2px;
+  font-size: 18px;
+  align-items: center;
+  gap: 10px;
+`;
+
+const Checkbox = styled.input`
+  width: 20px;
+  height: 20px;
+  color: black;
+`;
+
+
+const PlaylistPopupCheckbox = ({playlist}) => {
+    const [isAdded, setIsAdded] = useState(false);
+    const { video } = useSelector(state => state.reducer.video);
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        setIsAdded(!!playlist.videos.includes(video._id));
+    },[playlist]);
+
+    const handler = async (e) => {
+            if (e.target.checked) {
+                await axios.put(`http://localhost:8080/playlists/add/${playlist._id}`,{video:video._id}, {withCredentials: true})
+                           .then(res => dispatch(updatePlaylist(res.data)))
+                           .catch(console.log);
+            }
+            else {
+                await axios.put(`http://localhost:8080/playlists/remove/${playlist._id}`,{video:video._id}, {withCredentials: true})
+                           .then(res => dispatch(updatePlaylist(res.data)))
+                           .catch(console.log);
+            }
+    }
+
+    return (
+        <Container>
+            <Checkbox type={"checkbox"} checked={isAdded} onChange={(e) => handler(e)}/>
+            {playlist.name}
+        </Container>
+    );
+};
+
+export default PlaylistPopupCheckbox;
