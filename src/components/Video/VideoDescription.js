@@ -181,7 +181,7 @@ const VideoDescription = ({video, user}) => {
     const popup = () => {
         if (openPopup) {
             return (
-                <PlaylistPopup setOpenPopup={setOpenPopup} openPopup={openPopup}/>
+                <PlaylistPopup setOpenPopup={setOpenPopup} video={video}/>
             )
         }
     }

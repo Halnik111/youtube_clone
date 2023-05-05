@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {updatePlaylist} from "../../redux/playlistsSlice";
 
 const Container = styled.div`
@@ -20,9 +20,8 @@ const Checkbox = styled.input`
 `;
 
 
-const PlaylistPopupCheckbox = ({playlist}) => {
+const PlaylistPopupCheckbox = ({playlist, video}) => {
     const [isAdded, setIsAdded] = useState(false);
-    const { video } = useSelector(state => state.reducer.video);
     const dispatch = useDispatch();
 
 

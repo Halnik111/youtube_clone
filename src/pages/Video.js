@@ -69,6 +69,10 @@ const Video = () => {
         viewVideo();
     }, [])
 
+    //TODO showing video index in playlist
+    //TODO blue save button if video is saved in user playlist
+    //TODO share button copy link
+
     return (
         <Container>
             <Content>

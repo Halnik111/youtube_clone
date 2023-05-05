@@ -1,8 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import PlaylistCard from "../PlaylistCard";
+import {playlistsFetchSuccess} from "../../redux/playlistsSlice";
 
 const Container = styled.div`
   display: flex;
@@ -74,10 +75,11 @@ const TextArea = styled.textarea`
 
 
 const AccountLibrary = ({channel}) => {
-    const [playlists, setPlaylists] = useState([]);
+    const {playlists} =  useSelector(state => state.reducer.playlists);
     const [openPopup, setOpenPopup] = useState(false);
     const {user} = useSelector(state => state.reducer.user);
     let popupRef = useRef();
+    const dispatch = useDispatch();
     const [playlistName, setPlaylistName] = useState('');
 
     useEffect(() => {
@@ -96,14 +98,14 @@ const AccountLibrary = ({channel}) => {
 
     const fetchPlaylists = async () => {
         await axios.get(`http://localhost:8080/playlists/${channel._id}`)
-            .then(res =>  setPlaylists(res.data))
+            .then(res =>  dispatch(playlistsFetchSuccess(res.data)))
                    .catch(console.log);
 
     }
 
     const createPlaylist = async () => {
         await axios.post(`http://localhost:8080/playlists/`, {name: playlistName}, {withCredentials: true})
-            .then(res => setPlaylists([...playlists, res.data]));
+            .then(res => dispatch(playlistsFetchSuccess([...playlists, res.data])));
     }
 
     const displayPlaylists = () => {
@@ -127,7 +129,6 @@ const AccountLibrary = ({channel}) => {
                 </Popup>
             )
         }
-
     }
 
     return (

@@ -39,6 +39,8 @@ const PlaylistSidebar = ({playlist}) => {
         return videos.map(video => <RecommendationsCard key={video._id} video={video} playlist={playlist}/> )
     }
 
+    //TODO highlight current video in sidebar
+
     return (
         <Container>
             <Wrapper>

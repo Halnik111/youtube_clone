@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
 import Card from "./Card";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import {useSelector} from "react-redux";
 
 const Container = styled.div`
     width: 100%;
@@ -27,8 +29,13 @@ const PlaylistBanner = styled.div`
   width: 100%;
   font-size: 22px;
   padding: 15px 30px;
-  border-bottom: 2px solid ${({theme}) => theme.softColor};
   border-top: 2px solid ${({theme}) => theme.softColor};
+`;
+
+const PopupWrapper = styled.div`
+  margin-left: 5px;
+    display: flex;
+  gap: 5px;
 `;
 
 const Button = styled.div`
@@ -49,35 +56,100 @@ const Button = styled.div`
 
 `;
 
-const PlaylistCard = ({playlist}) => {
+const DeleteButton = styled(Button)`
+    background-color: indianred;
+  :hover {
+    background-color: #b44141;
+  }
+`;
+
+const PopupButton= styled(Button)`
+    height: 16px;
+  font-size: 14px;
+  font-weight: 400;
+  background-color: indianred;
+
+  :nth-child(1):hover {
+    background-color: ${({theme}) => theme.softColor};
+  }
+  
+  :nth-child(2):hover {
+    background-color: firebrick;
+  }
+`;
+
+const PlaylistCard = ({playlist, setPlaylists}) => {
     const [videos, setVideos] = useState([]);
+    const [openDeleteDropdown, setOpenDeleteDropdown] = useState(false);
+    const {user} = useSelector(state =>  state.reducer.user);
+    const popupRef = useRef();
+
 
     useEffect(() => {
         fetchPlaylistVideos();
-    });
+
+        let handler = (e) => {
+            try {
+                if (!popupRef.current.contains(e.target)) {
+                    setOpenDeleteDropdown(false);
+                }
+            }
+            catch (err) {
+            }
+        }
+        document.addEventListener("mousedown", handler);
+    }, [playlist]);
 
     const fetchPlaylistVideos = async () => {
         await axios.get(`http://localhost:8080/playlists/preview/${playlist._id}`)
             .then(res => setVideos(res.data));
     }
 
+    const deletePlaylist = async () => {
+        await axios.delete(`http://localhost:8080/playlists/${playlist._id}`, {withCredentials: true})
+                   .then(res => setPlaylists(res.data));
+    }
+
     const displayVideos = () => {
         if (videos.length === 0) {
-            return <div>Empty playlist</div>
+            return <div style={{margin: "35px"}}>Empty playlist</div>
+
         }
         else {
             return (
-                videos.map(video => <Card key={video._id} video={video} playlist={playlist}/>)
+                videos.map(video => <Card key={video._id} video={video} playlist={playlist} fetchVideos={fetchPlaylistVideos}/>)
             )
+        }
+    };
+    
+    const popup = () => {
+        if (openDeleteDropdown) {
+            return (
+                <PopupWrapper ref={popupRef}>
+                    <PopupButton>Cancel</PopupButton>
+                    <PopupButton onClick={() =>  deletePlaylist()}>Delete</PopupButton>
+                </PopupWrapper>
+            );
         }
     }
 
     return (
         <Container>
-            <PlaylistBanner>
-                {playlist.name}
-                <Button>View All ►</Button>
-            </PlaylistBanner>
+            {user._id === playlist.userId ?
+                <PlaylistBanner>
+                    {playlist.name}
+                    <Button>View All ►</Button>
+                    <DeleteButton onClick={() => setOpenDeleteDropdown(!openDeleteDropdown)}><DeleteOutlinedIcon/>
+                        {popup()}
+                    </DeleteButton>
+                </PlaylistBanner>
+                :
+                <PlaylistBanner>
+                    {playlist.name}
+                    <Button>View All ►</Button>
+                </PlaylistBanner>
+            }
+
             <Content>
                 {displayVideos()}
             </Content>

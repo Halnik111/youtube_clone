@@ -16,7 +16,31 @@ const Popup = styled.div`
   right: 0;
 `;
 
-const PlaylistPopup = ({setOpenPopup}) => {
+const Banner = styled.div`
+  font-weight: 400;
+  font-size: 20px;
+  padding-bottom: 5px;
+    border-bottom: 1px solid ${({theme}) => theme.bgOpposite};
+`;
+
+const Button = styled.div`
+  cursor: pointer;
+  border-radius: 15px;
+  display: flex;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 15px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: ${({theme}) => theme.softColor};
+
+  :hover {
+    background-color: ${({theme}) => theme.colorFocus};
+  }
+`;
+
+const PlaylistPopup = ({setOpenPopup, video}) => {
     const {user} =  useSelector(state => state.reducer.user);
     const {playlists} =  useSelector(state => state.reducer.playlists);
     const popupRef = useRef();
@@ -25,6 +49,7 @@ const PlaylistPopup = ({setOpenPopup}) => {
 
     useEffect(() => {
         loadUserPlaylists();
+
         let handler = (e) => {
             try {
                 if (!popupRef.current.contains(e.target)) {
@@ -45,8 +70,9 @@ const PlaylistPopup = ({setOpenPopup}) => {
 
     return (
         <Popup ref={popupRef}>
+            <Banner>Save to Playlist:</Banner>
             {user ?
-                playlists.map(playlist => <PlaylistPopupCheckbox key={playlist._id} playlist={playlist}/>)
+                playlists.map(playlist => <PlaylistPopupCheckbox key={playlist._id} playlist={playlist} video={video}/>)
                 :
                 <Link to={"/signIn"} style={{textDecoration: "none", color:"inherit"}}>
                     <Button>Login to save videos</Button>

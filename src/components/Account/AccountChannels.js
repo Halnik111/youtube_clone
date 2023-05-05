@@ -7,6 +7,9 @@ const Container = styled.div`
 `;
 
 const AccountChannels = () => {
+
+    //TODO display subscribedChannels of channel.
+
     return (
         <Container>
             Channels
