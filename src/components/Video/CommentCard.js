@@ -206,13 +206,17 @@ const CommentCard = ({currentComment, user, fetchComments}) => {
     };
 
     const likeComment = async () => {
-        await axios.put(`http://localhost:8080/comments/like/${comment._id}`, {}, {withCredentials: true})
-                .then(res => setComment(res.data))
+        if (user) {
+            await axios.put(`http://localhost:8080/comments/like/${comment._id}`, {}, {withCredentials: true})
+                       .then(res => setComment(res.data))
+        }
     }
 
     const dislikeComment = async () => {
-        await axios.put(`http://localhost:8080/comments/dislike/${comment._id}`, {}, {withCredentials: true})
-                   .then(res => setComment(res.data))
+        if (user) {
+            await axios.put(`http://localhost:8080/comments/dislike/${comment._id}`, {}, {withCredentials: true})
+                       .then(res => setComment(res.data))
+        }
     }
 
     const editComment = async () => {

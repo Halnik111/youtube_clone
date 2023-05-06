@@ -48,7 +48,9 @@ const PlaylistPopup = ({setOpenPopup, video}) => {
 
 
     useEffect(() => {
-        loadUserPlaylists();
+        if (user) {
+            loadUserPlaylists();
+        }
 
         let handler = (e) => {
             try {

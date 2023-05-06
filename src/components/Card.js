@@ -131,7 +131,7 @@ const Card = ({video, playlist}) => {
                             <Video_description>
                                 <Title>{video.videoTitle}</Title>
                                 <div style={{display: "flex"}}>
-                                    <Channel onClick={() => navigate(`/account/${video.userId}`)}>{channel.name}</Channel>
+                                    <Channel onClick={() => navigate(`/account/${video.userId}`, {state: 1})}>{channel.name}</Channel>
                                 </div>
                                 <Info>{video.views} views • {format(video.createdAt)}</Info>
                             </Video_description>

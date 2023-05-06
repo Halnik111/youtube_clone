@@ -121,7 +121,7 @@ const PlaylistCard = ({playlist, setPlaylists}) => {
             )
         }
     };
-    
+
     const popup = () => {
         if (openDeleteDropdown) {
             return (
@@ -135,7 +135,7 @@ const PlaylistCard = ({playlist, setPlaylists}) => {
 
     return (
         <Container>
-            {user._id === playlist.userId ?
+            {user?._id === playlist.userId ?
                 <PlaylistBanner>
                     {playlist.name}
                     <Button>View All ►</Button>
