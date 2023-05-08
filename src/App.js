@@ -37,7 +37,6 @@ function App() {
         }
     }
 
-    //TODO implement user view history page
 
     return (
         <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>

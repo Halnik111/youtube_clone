@@ -163,7 +163,6 @@ const Account = () => {
         }
     }
 
-    //TODO popup for "customize channel" button to change name, picture, email
 
     return (
         <Container>
