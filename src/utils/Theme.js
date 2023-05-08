@@ -16,8 +16,8 @@ export const lightTheme = {
     bgLighter: 'white',
     text: 'black',
     textSoft: '#606060',
-    softColor: 'rgba(0,0,0,0.1)',
-    colorHighlight: 'rgba(0,0,0,0.05)',
+    softColor: '#d2d2d2',
+    colorHighlight: '#a9a9a9',
     colorFocus: 'rgba(0,0,0,0.1)',
     scrollbarColor: 'rgba(0,0,0,0.4)'
 }

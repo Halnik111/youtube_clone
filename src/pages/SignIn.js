@@ -151,6 +151,19 @@ const SignIn = ({darkMode, setDarkMode}) => {
             .catch(() => {
                 dispatch(loginFail());
             });
+    };
+
+    const signInTestUser = async () => {
+        await axios.post("http://localhost:8080/auth/signIn", {name: "test", password: "123"}, {withCredentials: true})
+                   .then(res => {
+                       dispatch(loginSuccess(res.data));
+                   })
+                   .then(() => {
+                       navigate("/")
+                   })
+                   .catch((err) => {
+                       dispatch(loginFail(err.response.data))
+                   })
     }
 
     const loginError = () => {
@@ -183,6 +196,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
                         <Image src={GoogleLogo}/>
                         Continue with Google
                     </Google>
+                    <Button type={"button"} style={{width: "auto"}} value={"Continue with test user"} onClick={e => signInTestUser(e)}/>
                 </SignInForm>
             </ContentWrapper>
         </Container>

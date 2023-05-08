@@ -47,7 +47,7 @@ const Button = styled.div`
   position: relative;
   font-size: 14px;
   font-weight: 500;
-  background-color: ${({theme}) => theme.colorHighlight};
+  background-color: ${({theme}) => theme.softColor};
 
   :hover {
     background-color: ${({theme}) => theme.colorFocus};
@@ -61,7 +61,7 @@ const RatingButtonWrapper = styled.div`
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
-  background-color: ${({theme}) => theme.colorHighlight};
+  background-color: ${({theme}) => theme.softColor};
 `;
 
 const RatingButton = styled.div`
@@ -77,7 +77,7 @@ const RatingButton = styled.div`
   }
   
   :nth-child(1) {
-    border-right: 1px solid ${({theme}) => theme.softColor};
+    border-right: 1px solid ${({theme}) => theme.colorHighlight};
     border-radius: 20px 0 0 20px;
     padding-left: 10px;
     gap: 10px;
@@ -117,7 +117,7 @@ const Subscribers = styled.div`
 `;
 
 const Info = styled.div`
-  background-color: ${({theme}) => theme.colorHighlight};
+  background-color: ${({theme}) => theme.softColor};
   padding: 15px;
   margin-top: 20px;
   min-height: 80px;
