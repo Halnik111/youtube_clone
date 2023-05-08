@@ -124,7 +124,7 @@ const Account = () => {
     },[path]);
 
     const fetchChannel = async () => {
-        await axios.get(`http://localhost:8080/users/find/${path}`, {withCredentials: true})
+        await axios.get(`/users/find/${path}`, {withCredentials: true})
                    .then(res => {
                        setChannel(res.data);
                    })

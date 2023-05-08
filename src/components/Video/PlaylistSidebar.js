@@ -31,7 +31,7 @@ const PlaylistSidebar = ({playlist}) => {
     }, [playlist]);
 
     const fetchPlaylistVideos = async () => {
-        await axios.get(`http://localhost:8080/playlists/preview/${playlist._id}`)
+        await axios.get(`/playlists/preview/${playlist._id}`)
                    .then(res => setVideos(res.data));
     }
 

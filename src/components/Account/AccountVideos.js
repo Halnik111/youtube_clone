@@ -29,7 +29,7 @@ const AccountVideos = ({path}) => {
     },[path])
 
     const fetchVideos = async () => {
-        await axios.get(`http://localhost:8080/videos/channel/${path}`, {withCredentials: true})
+        await axios.get(`/videos/channel/${path}`, {withCredentials: true})
                    .then(res => {
                        setVideos(res.data);
                    })

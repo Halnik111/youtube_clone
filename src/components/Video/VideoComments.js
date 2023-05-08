@@ -78,13 +78,13 @@ const VideoComments = ({video, user}) => {
     }, [video]);
 
     const fetchComments = async () => {
-        await axios.get(`http://localhost:8080/comments/${video._id}`)
+        await axios.get(`/comments/${video._id}`)
             .then(res => setComments(res.data));
     };
 
     const addComment = async () => {
         if (newComment.length >= 1) {
-            await axios.post("http://localhost:8080/comments/", {
+            await axios.post("/comments/", {
                 userId: user._id,
                 videoID: video._id,
                 description: newComment,

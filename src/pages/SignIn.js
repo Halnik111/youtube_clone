@@ -113,7 +113,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
     const login = async (e) => {
         e.preventDefault();
 
-        await axios.post("http://localhost:8080/auth/signIn", {name, password}, {withCredentials: true})
+        await axios.post("/auth/signIn", {name, password}, {withCredentials: true})
                    .then(res => {
                        dispatch(loginSuccess(res.data));
                    })
@@ -154,7 +154,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
     };
 
     const signInTestUser = async () => {
-        await axios.post("http://localhost:8080/auth/signIn", {name: "test", password: "123"}, {withCredentials: true})
+        await axios.post("/auth/signIn", {name: "test", password: "123"}, {withCredentials: true})
                    .then(res => {
                        dispatch(loginSuccess(res.data));
                    })

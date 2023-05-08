@@ -154,7 +154,7 @@ const VideoDescription = ({video, user}) => {
 
 
     const fetchChannel = async () => {
-        await axios.get(`http://localhost:8080/users/find/${video.userId}`, {withCredentials: true})
+        await axios.get(`/users/find/${video.userId}`, {withCredentials: true})
                    .then(res => {
                        setChannel(res.data);
                    })
@@ -162,7 +162,7 @@ const VideoDescription = ({video, user}) => {
     }
     const likeVideo = async () => {
         if (user) {
-            await axios.put(`http://localhost:8080/users/like/${video._id}`,{}, {withCredentials: true});
+            await axios.put(`/users/like/${video._id}`,{}, {withCredentials: true});
             dispatch(likes(user._id))
             setLikeColor(!likeColor);
             setDisLikeColor(false);
@@ -171,7 +171,7 @@ const VideoDescription = ({video, user}) => {
 
     const dislikeVideo = async () => {
         if (user) {
-            await axios.put(`http://localhost:8080/users/dislike/${video._id}`, {}, {withCredentials: true});
+            await axios.put(`/users/dislike/${video._id}`, {}, {withCredentials: true});
             dispatch(dislikes(user._id))
             setDisLikeColor(!dislikeColor);
             setLikeColor(false)

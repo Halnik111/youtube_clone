@@ -17,7 +17,7 @@ const VideoRecommendations = () => {
     }, [])
 
     const fetchVideos = async () => {
-        return await axios.get(`http://localhost:8080/videos/explore`, {withCredentials: true})
+        return await axios.get(`/videos/explore`, {withCredentials: true})
                           .then(res => setVideos(res.data))
                           .catch(console.error);
     };

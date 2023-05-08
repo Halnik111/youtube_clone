@@ -106,7 +106,7 @@ const Card = ({video, playlist}) => {
     }, [video.userId]);
 
     const fetchChannel = async () => {
-        return await fetch(`http://localhost:8080/users/find/${video.userId}`)
+        return await fetch(`/users/find/${video.userId}`)
             .then(res => res.json())
             .then(data => setChannel(data))
     };

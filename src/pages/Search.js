@@ -28,7 +28,7 @@ const Search = () => {
 
     useEffect(() => {
         const fetchVideos = async () => {
-            await axios.get(`http://localhost:8080/videos/search${searchInput}`, {withCredentials: true})
+            await axios.get(`/videos/search${searchInput}`, {withCredentials: true})
                 .then(res => setVideos(res.data));
         }
         fetchVideos();
