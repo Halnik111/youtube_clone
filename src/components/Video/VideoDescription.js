@@ -154,6 +154,7 @@ const VideoDescription = ({video, user}) => {
 
 
     const fetchChannel = async () => {
+        console.log(video);
         await axios.get(`/api/users/find/${video.userId}`, {withCredentials: true})
                    .then(res => {
                        setChannel(res.data);
@@ -245,7 +246,7 @@ const VideoDescription = ({video, user}) => {
                     {video.videoDescription}
                 </div>
                 <div style={{marginTop: '30px', color: '#3ea6ff'}}>
-                    #{video.tags.join(' #')}
+                    #{video.tags?.join(' #')}
                 </div>
             </Info>
         </Container>
