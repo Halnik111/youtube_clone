@@ -52,6 +52,7 @@ const Video = () => {
     let location = useLocation();
 
     useEffect(  () => {
+        console.log("video component effect")
         dispatch(fetchStart)
         const fetchVideo = async () => {
             await axios.get(`/api/videos/find/${path}`, {withCredentials: true})
@@ -78,7 +79,7 @@ const Video = () => {
                     >
                     </IFrame>
                 </VideoWrapper>
-                <VideoDescription video={video} user={user} path={path}/>
+                <VideoDescription video={video} user={user}/>
                 <VideoComments video={video} user={user}/>
             </Content>
             {location.state ?

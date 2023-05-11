@@ -134,6 +134,7 @@ const VideoDescription = ({video, user}) => {
     const [openPopup, setOpenPopup] = useState(false);
 
     useEffect(  () => {
+        console.log(video);
         if (user) {
             setLikeColor(video.like.includes(user._id))
             setDisLikeColor(video.dislike.includes(user._id))
@@ -246,7 +247,7 @@ const VideoDescription = ({video, user}) => {
                     {video.videoDescription}
                 </div>
                 <div style={{marginTop: '30px', color: '#3ea6ff'}}>
-                    #{video.tags?.join(' #')}
+                    #{video.tags.join(' #')}
                 </div>
             </Info>
         </Container>
