@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import Menu from "../components/Menu";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {loginFail, loginStart, loginSuccess} from "../redux/userSlice";
@@ -97,7 +96,7 @@ const Image = styled.img`
   padding: 5px;
 `;
 
-const SignIn = ({darkMode, setDarkMode}) => {
+const SignIn = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -113,7 +112,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
     const login = async (e) => {
         e.preventDefault();
 
-        await axios.post("/auth/signIn", {name, password}, {withCredentials: true})
+        await axios.post("/api/auth/signIn", {name, password}, {withCredentials: true})
                    .then(res => {
                        dispatch(loginSuccess(res.data));
                    })
@@ -129,7 +128,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
     const register = async (e) => {
         e.preventDefault()
 
-        await axios.post("/auth/signUp", {name, email, password})
+        await axios.post("/api/auth/signUp", {name, email, password})
             .then(() => login(e))
             .catch(console.log);
     }
@@ -138,7 +137,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
 
         await signInWithPopup(auth, provider)
             .then((result) => {
-                return axios.post("/auth/google", {
+                return axios.post("/api/auth/google", {
                     name: result.user.displayName,
                     email: result.user.email,
                     image: result.user.photoURL,
@@ -154,7 +153,7 @@ const SignIn = ({darkMode, setDarkMode}) => {
     };
 
     const signInTestUser = async () => {
-        await axios.post("/auth/signIn", {name: "test", password: "123"}, {withCredentials: true})
+        await axios.post("/api/auth/signIn", {name: "test", password: "123"}, {withCredentials: true})
                    .then(res => {
                        dispatch(loginSuccess(res.data));
                    })
@@ -175,7 +174,6 @@ const SignIn = ({darkMode, setDarkMode}) => {
 
     return (
         <Container>
-            <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
             <ContentWrapper>
                 <SignInForm>
                     <Form>

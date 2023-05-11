@@ -65,7 +65,7 @@ const PlaylistPopup = ({setOpenPopup, video}) => {
     },[user]);
 
     const loadUserPlaylists = async () => {
-        await axios.get(`/playlists/${user._id}`)
+        await axios.get(`/api/playlists/${user._id}`)
                    .then(res =>  dispatch(playlistsFetchSuccess(res.data)))
                    .catch(console.log);
     }

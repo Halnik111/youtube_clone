@@ -54,7 +54,7 @@ const Video = () => {
     useEffect(  () => {
         dispatch(fetchStart)
         const fetchVideo = async () => {
-            await axios.get(`/videos/find/${path}`, {withCredentials: true})
+            await axios.get(`/api/videos/find/${path}`, {withCredentials: true})
                        .then(res => dispatch(fetchSuccess(res.data)))
                        .catch(err => dispatch(fetchFail(err)));
         }
@@ -63,7 +63,7 @@ const Video = () => {
 
     useEffect(() => {
         const viewVideo = async () => {
-            await axios.put(`/videos/view/${path}`, {withCredentials: true})
+            await axios.put(`/api/videos/view/${path}`, {withCredentials: true})
                        .then(res => dispatch(views(res.data.views)));
         }
         viewVideo();

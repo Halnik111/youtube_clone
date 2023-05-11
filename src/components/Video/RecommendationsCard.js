@@ -45,7 +45,7 @@ const RecommendationsCard = ({video, playlist}) => {
     }, [video.userId]);
 
     const fetchChannel = async () => {
-        await axios.get(`/users/find/${video.userId}`)
+        await axios.get(`/api/users/find/${video.userId}`)
             .then(res => setChannel(res.data))
             .catch(console.log);
     }

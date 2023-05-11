@@ -201,31 +201,31 @@ const CommentCard = ({currentComment, user, fetchComments}) => {
     }, [comment])
 
     const fetchChannel = async () => {
-        await axios.get(`/users/find/${comment.userId}`)
+        await axios.get(`/api/users/find/${comment.userId}`)
             .then(res => setChannel(res.data))
     };
 
     const likeComment = async () => {
         if (user) {
-            await axios.put(`/comments/like/${comment._id}`, {}, {withCredentials: true})
+            await axios.put(`/api/comments/like/${comment._id}`, {}, {withCredentials: true})
                        .then(res => setComment(res.data))
         }
     }
 
     const dislikeComment = async () => {
         if (user) {
-            await axios.put(`/comments/dislike/${comment._id}`, {}, {withCredentials: true})
+            await axios.put(`/api/comments/dislike/${comment._id}`, {}, {withCredentials: true})
                        .then(res => setComment(res.data))
         }
     }
 
     const editComment = async () => {
-        await axios.put(`/comments/${comment._id}`, {description: newContent}, {withCredentials: true})
+        await axios.put(`/api/comments/${comment._id}`, {description: newContent}, {withCredentials: true})
                    .then(res =>  setComment(res.data))
     }
 
     const deleteComment = async () => {
-        await axios.delete(`/comments/${comment._id}`, {withCredentials: true})
+        await axios.delete(`/api/comments/${comment._id}`, {withCredentials: true})
             .then(fetchComments)
     }
 

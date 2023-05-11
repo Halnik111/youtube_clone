@@ -85,7 +85,7 @@ const AccountDropdown = ({userImage, username, setOpen}) => {
 
         try {
 
-            await axios.get("/auth/signOut")
+            await axios.get("/api/auth/signOut")
                        .then(setOpen(false))
                        .then(() => navigate("/"))
                        .then(dispatch(logout()))

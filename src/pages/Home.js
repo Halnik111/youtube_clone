@@ -30,7 +30,7 @@ const Home = ({type}) => {
     }, [type])
 
     const fetchVideos = async () => {
-            return await axios.get(`/videos/${type}`, {withCredentials: true})
+            return await axios.get(`/api/videos/${type}`, {withCredentials: true})
                               .then(res => setVideos(res.data))
                               .catch(console.error);
     }

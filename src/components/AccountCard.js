@@ -41,7 +41,7 @@ const AccountCard = ({channelId}) => {
     }, []);
 
     const fetchChannel = async () => {
-        await axios.get(`/users/find/${channelId}`)
+        await axios.get(`/api/users/find/${channelId}`)
             .then(res => setChannel(res.data));
     }
 

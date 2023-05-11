@@ -31,12 +31,12 @@ const PlaylistPopupCheckbox = ({playlist, video}) => {
 
     const handler = async (e) => {
             if (e.target.checked) {
-                await axios.put(`/playlists/add/${playlist._id}`,{video:video._id}, {withCredentials: true})
+                await axios.put(`/api/playlists/add/${playlist._id}`,{video:video._id}, {withCredentials: true})
                            .then(res => dispatch(updatePlaylist(res.data)))
                            .catch(console.log);
             }
             else {
-                await axios.put(`/playlists/remove/${playlist._id}`,{video:video._id}, {withCredentials: true})
+                await axios.put(`/api/playlists/remove/${playlist._id}`,{video:video._id}, {withCredentials: true})
                            .then(res => dispatch(updatePlaylist(res.data)))
                            .catch(console.log);
             }

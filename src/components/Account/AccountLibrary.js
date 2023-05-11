@@ -97,14 +97,14 @@ const AccountLibrary = ({channel}) => {
     },[channel]);
 
     const fetchPlaylists = async () => {
-        await axios.get(`/playlists/${channel._id}`)
+        await axios.get(`/api/playlists/${channel._id}`)
             .then(res =>  dispatch(playlistsFetchSuccess(res.data)))
                    .catch(console.log);
 
     }
 
     const createPlaylist = async () => {
-        await axios.post(`/playlists/`, {name: playlistName}, {withCredentials: true})
+        await axios.post(`/api/playlists/`, {name: playlistName}, {withCredentials: true})
             .then(res => dispatch(playlistsFetchSuccess([...playlists, res.data])));
     }
 

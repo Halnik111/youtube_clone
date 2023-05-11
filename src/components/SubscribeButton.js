@@ -36,7 +36,7 @@ const SubscribeButton = ({user, channel, setChannel}) => {
 
     const subscribe = async () => {
         if (user) {
-            await axios.put(`/users/sub/${channel._id}`, {}, {withCredentials: true})
+            await axios.put(`/api/users/sub/${channel._id}`, {}, {withCredentials: true})
                        .then(res => {
                            dispatch(subscribeChannel(res.data.subscribedUsers))
                        });
@@ -47,7 +47,7 @@ const SubscribeButton = ({user, channel, setChannel}) => {
 
     const unSubscribe = async () => {
         if (user) {
-            await axios.put(`/users/unsub/${channel._id}`, {}, {withCredentials: true})
+            await axios.put(`/api/users/unsub/${channel._id}`, {}, {withCredentials: true})
                        .then(res => dispatch(subscribeChannel(res.data.subscribedUsers)));
             setChannel({...channel, subscribers: channel.subscribers -1} )
             setSubColor(false);

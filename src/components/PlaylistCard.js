@@ -101,12 +101,12 @@ const PlaylistCard = ({playlist, setPlaylists}) => {
     }, [playlist]);
 
     const fetchPlaylistVideos = async () => {
-        await axios.get(`/playlists/preview/${playlist._id}`)
+        await axios.get(`/api/playlists/preview/${playlist._id}`)
             .then(res => setVideos(res.data));
     }
 
     const deletePlaylist = async () => {
-        await axios.delete(`/playlists/${playlist._id}`, {withCredentials: true})
+        await axios.delete(`/api/playlists/${playlist._id}`, {withCredentials: true})
                    .then(res => setPlaylists(res.data));
     }
 
