@@ -83,6 +83,7 @@ const AccountLibrary = ({channel}) => {
     const [playlistName, setPlaylistName] = useState('');
 
     useEffect(() => {
+        console.log("accLibrary effect")
         fetchPlaylists();
 
         let handler = (e) => {
@@ -97,10 +98,10 @@ const AccountLibrary = ({channel}) => {
     },[channel]);
 
     const fetchPlaylists = async () => {
+        console.log("fetchPlaylist fetch");
         return await axios.get(`/api/playlists/${channel._id}`)
             .then(res =>  dispatch(playlistsFetchSuccess(res.data)))
                    .catch(console.log);
-
     }
 
     const createPlaylist = async () => {

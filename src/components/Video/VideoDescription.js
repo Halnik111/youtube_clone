@@ -218,7 +218,7 @@ const VideoDescription = ({video, user}) => {
                             changeColor={likeColor}
                         >
                             <ThumbUpAltOutlinedIcon/>
-                            {video.like.length}
+                            {video.like?.length}
                         </RatingButton>
                         <RatingButton
                             onClick={dislikeVideo}
