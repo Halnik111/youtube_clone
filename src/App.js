@@ -47,14 +47,14 @@ function App() {
                     <Main>
                         <Routes>
                             <Route path="/">
-                                <Route index element={<Home type={"explore"} darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
-                                <Route path={"trend"} element={<Home type={"trend"} darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
-                                <Route path={"subscription"} element={<Home type={"subscription"} darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
-                                <Route path={"search"} element={<Search darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
+                                <Route index element={<Home type={"explore"} />}/>
+                                <Route path={"trend"} element={<Home type={"trend"} />}/>
+                                <Route path={"subscription"} element={<Home type={"subscription"} />}/>
+                                <Route path={"search"} element={<Search />}/>
                                 <Route path="video">
                                     <Route path=":id" element={<Video/>}/>
                                 </Route>
-                                <Route path={"signIn"} element={<SignIn darkMode={darkMode} setDarkMode={setDarkMode}/>}/>
+                                <Route path={"signIn"} element={<SignIn />}/>
                                 <Route path={"account"}>
                                     <Route path=":id" element={<Account/>}/>
                                 </Route>

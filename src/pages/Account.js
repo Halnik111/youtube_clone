@@ -112,7 +112,7 @@ const NavigationButton = styled.div`
 const Account = () => {
     const [channel, setChannel] = useState({});
     const { user } = useSelector(state => state.reducer.user);
-    const path = useLocation().pathname.split("/")[2];
+    const path = useLocation().pathname.split("/")[3];
     let location = useLocation();
     const navigate = useNavigate();
     const [section, setSection] = useState('');
