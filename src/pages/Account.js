@@ -120,7 +120,8 @@ const Account = () => {
 
     useEffect(() => {
         fetchChannel();
-        setSection(location.state.toString())
+        setSection(location.state.toString());
+        console.log(location.state.toString());
     },[path]);
 
     const fetchChannel = async () => {
@@ -155,6 +156,7 @@ const Account = () => {
     }
 
     const displayContent = () => {
+        console.log(section);
         switch (section) {
             case "1": return <AccountVideos path={path}/>
             case "2": return <AccountChannels channel={channel}/>
