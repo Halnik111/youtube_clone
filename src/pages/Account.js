@@ -54,12 +54,6 @@ const Info = styled.div`
   color: ${({theme}) => theme.textSoft};
 `;
 
-const About = styled.div`
-  font-size: 12px;
-  font-weight: 400;
-  color: ${({theme}) => theme.textSoft};
-`;
-
 const Buttons = styled.div`
   display: flex;
     gap: 25px;
@@ -155,7 +149,6 @@ const Account = () => {
     }
 
     const displayContent = () => {
-        console.log(section);
         switch (section) {
             case "1": return <AccountVideos path={path}/>
             case "2": return <AccountChannels channel={channel}/>
@@ -177,9 +170,6 @@ const Account = () => {
                             <Info>
                                 {channel.email} • {channel.subscribers} Subscribers • 0 Videos
                             </Info>
-                            <About>
-                                Nikolas Halo about section testing font size, esthetics and positioning.
-                            </About>
                         </ChannelDetails>
                     </AccountWrapper>
                 {actionButtons()}

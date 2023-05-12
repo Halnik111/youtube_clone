@@ -112,7 +112,6 @@ const AccountLibrary = ({channel}) => {
             return <div>No playlists found</div>
         }
         else  {
-            console.log(playlists);
             return playlists.map(playlist => <PlaylistCard key={playlist._id} playlist={playlist}/>);
         }
     }
