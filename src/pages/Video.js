@@ -52,7 +52,6 @@ const Video = () => {
     let location = useLocation();
 
     useEffect(  () => {
-        console.log("video component effect")
         dispatch(fetchStart)
         const fetchVideo = async () => {
             await axios.get(`/api/videos/find/${path}`, {withCredentials: true})

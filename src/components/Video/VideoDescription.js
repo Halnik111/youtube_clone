@@ -134,7 +134,6 @@ const VideoDescription = ({video, user}) => {
     const [openPopup, setOpenPopup] = useState(false);
 
     useEffect(  () => {
-        console.log(video);
         if (user) {
             setLikeColor(video.like.includes(user._id))
             setDisLikeColor(video.dislike.includes(user._id))

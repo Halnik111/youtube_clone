@@ -83,7 +83,7 @@ const AccountLibrary = ({channel}) => {
     const [playlistName, setPlaylistName] = useState('');
 
     useEffect(() => {
-        console.log("accLibrary effect")
+        console.log(channel)
         fetchPlaylists();
 
         let handler = (e) => {
