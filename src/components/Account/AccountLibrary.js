@@ -95,7 +95,7 @@ const AccountLibrary = ({channel}) => {
             }
         }
         document.addEventListener("mousedown", handler);
-    },[channel]);
+    },[channel._id]);
 
     const fetchPlaylists = async () => {
         console.log("fetchPlaylist fetch");
