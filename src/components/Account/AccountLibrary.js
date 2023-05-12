@@ -83,7 +83,6 @@ const AccountLibrary = ({channel}) => {
     const [playlistName, setPlaylistName] = useState('');
 
     useEffect(() => {
-        console.log(channel)
         fetchPlaylists();
 
         let handler = (e) => {
@@ -98,7 +97,6 @@ const AccountLibrary = ({channel}) => {
     },[channel._id]);
 
     const fetchPlaylists = async () => {
-        console.log("fetchPlaylist fetch");
         return await axios.get(`/api/playlists/${channel._id}`)
             .then(res =>  dispatch(playlistsFetchSuccess(res.data)))
                    .catch(console.log);
@@ -110,12 +108,12 @@ const AccountLibrary = ({channel}) => {
     }
 
     const displayPlaylists = () => {
-        if (playlists.length === 0) {
+        if (playlists.length === 0 && channel) {
             return <div>No playlists found</div>
         }
         else  {
             console.log(playlists);
-            //return playlists.map(playlist => <PlaylistCard key={playlist._id} playlist={playlist}/>);
+            return playlists.map(playlist => <PlaylistCard key={playlist._id} playlist={playlist}/>);
         }
     }
 
