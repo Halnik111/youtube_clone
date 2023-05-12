@@ -121,7 +121,6 @@ const Account = () => {
     useEffect(() => {
         fetchChannel();
         setSection(location.state.toString());
-        console.log(location.state.toString());
     },[path]);
 
     const fetchChannel = async () => {
