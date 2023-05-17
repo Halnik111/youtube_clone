@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SubscriptionsOutlinedIcon from '@mui/icons-material/SubscriptionsOutlined';
@@ -107,8 +107,10 @@ const Hr = styled.hr`
 const Menu = ({darkMode, setDarkMode, setOpenMenu}) => {
     const {user} = useSelector(state => state.reducer.user);
     let menuRef = useRef();
+    const [logo, setLogo] = useState('');
 
     useEffect(() => {
+        setLogo(LogoIcon);
         let handler = (e) => {
             try {
                 if (!menuRef.current.contains(e.target)) {
@@ -128,7 +130,7 @@ const Menu = ({darkMode, setDarkMode, setOpenMenu}) => {
                     <CloseMenuIcon fontSize={"large"} onClick={() => setOpenMenu(false)}/>
                     <Link to={"/"} style={{textDecoration:"none", color:"inherit"}}>
                         <Logo>
-                            <Img src={LogoIcon}/>
+                            <Img src={logo}/>
                             Youtube
                         </Logo>
                     </Link>
