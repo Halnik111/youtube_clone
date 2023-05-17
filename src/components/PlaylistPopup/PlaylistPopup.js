@@ -71,7 +71,7 @@ const PlaylistPopup = ({setOpenPopup, video}) => {
     };
 
     const displayPlaylists = () => {
-        console.log(playlists);
+        console.log(playlists.length);
         if (playlists.length !== 0) {
             return playlists.map(playlist => <PlaylistPopupCheckbox key={playlist._id} playlist={playlist} video={video}/>)
         }
