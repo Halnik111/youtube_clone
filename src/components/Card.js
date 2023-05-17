@@ -114,6 +114,7 @@ const Card = ({video, playlist}) => {
 
     const popup = () => {
         if (openPopup) {
+            console.log(video)
             return (
                 <PlaylistPopup setOpenPopup={setOpenPopup} video={video}/>
             )

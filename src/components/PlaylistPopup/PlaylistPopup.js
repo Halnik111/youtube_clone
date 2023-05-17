@@ -48,6 +48,7 @@ const PlaylistPopup = ({setOpenPopup, video}) => {
 
 
     useEffect(() => {
+        console.log(video)
         if (user) {
             loadUserPlaylists();
         }
@@ -68,12 +69,12 @@ const PlaylistPopup = ({setOpenPopup, video}) => {
         await axios.get(`/api/playlists/${user._id}`)
                    .then(res =>  dispatch(playlistsFetchSuccess(res.data)))
                    .catch(console.log);
-    }
+    };
 
     return (
         <Popup ref={popupRef}>
             <Banner>Save to Playlist:</Banner>
-            {user ?
+            {user && playlists ?
                 playlists.map(playlist => <PlaylistPopupCheckbox key={playlist._id} playlist={playlist} video={video}/>)
                 :
                 <Link to={"/signIn"} style={{textDecoration: "none", color:"inherit"}}>

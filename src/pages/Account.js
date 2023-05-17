@@ -14,7 +14,6 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   margin: 85px 150px 0 150px;
-  
 `;
 
 const AccountBanner = styled.div`
