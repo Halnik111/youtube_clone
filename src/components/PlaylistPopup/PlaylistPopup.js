@@ -48,7 +48,6 @@ const PlaylistPopup = ({setOpenPopup, video}) => {
 
 
     useEffect(() => {
-        console.log(video)
         if (user) {
             loadUserPlaylists();
         }
@@ -71,11 +70,20 @@ const PlaylistPopup = ({setOpenPopup, video}) => {
                    .catch(console.log);
     };
 
+    const displayPlaylists = () => {
+        if (playlists.length !== 0) {
+            return playlists.map(playlist => <PlaylistPopupCheckbox key={playlist._id} playlist={playlist} video={video}/>)
+        }
+        else {
+            return <div>No playlists found!</div>
+        }
+    }
+
     return (
         <Popup ref={popupRef}>
             <Banner>Save to Playlist:</Banner>
-            {user && playlists ?
-                playlists.map(playlist => <PlaylistPopupCheckbox key={playlist._id} playlist={playlist} video={video}/>)
+            {user ?
+                displayPlaylists()
                 :
                 <Link to={"/signIn"} style={{textDecoration: "none", color:"inherit"}}>
                     <Button>Login to save videos</Button>
