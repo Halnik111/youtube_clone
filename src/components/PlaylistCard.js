@@ -20,6 +20,15 @@ const Content = styled.div`
   @media screen and (min-width: 1650px) {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
+
+  @media screen and (max-width: 600px) {
+    
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: auto auto;
+    margin: 0 15px;
+  }
 `;
 
 const PlaylistBanner = styled.div`
@@ -29,7 +38,14 @@ const PlaylistBanner = styled.div`
   width: 100%;
   font-size: 22px;
   padding: 15px 30px;
+  
   border-top: 2px solid ${({theme}) => theme.softColor};
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 22px;
+  }
 `;
 
 const PopupWrapper = styled.div`
@@ -54,6 +70,9 @@ const Button = styled.div`
     background-color: ${({theme}) => theme.colorFocus};
   }
 
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 `;
 
 const DeleteButton = styled(Button)`
@@ -138,10 +157,12 @@ const PlaylistCard = ({playlist, setPlaylists}) => {
             {user?._id === playlist.userId ?
                 <PlaylistBanner>
                     {playlist.name}
-                    <Button>View All ►</Button>
-                    <DeleteButton onClick={() => setOpenDeleteDropdown(!openDeleteDropdown)}><DeleteOutlinedIcon/>
-                        {popup()}
-                    </DeleteButton>
+                    <div style={{display: 'flex', gap: '10px'}}>
+                        <Button>View All ►</Button>
+                        <DeleteButton onClick={() => setOpenDeleteDropdown(!openDeleteDropdown)}><DeleteOutlinedIcon/>
+                            {popup()}
+                        </DeleteButton>
+                    </div>
                 </PlaylistBanner>
                 :
                 <PlaylistBanner>

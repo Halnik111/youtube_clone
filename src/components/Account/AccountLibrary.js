@@ -32,6 +32,8 @@ const PlaylistButtons = styled.div`
   gap: 25px;
   border-bottom: 2px solid ${({theme}) => theme.softColor};
   padding: 10px 30px;
+  
+  
 `;
 
 const Button = styled.div`

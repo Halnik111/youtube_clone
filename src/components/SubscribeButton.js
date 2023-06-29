@@ -22,6 +22,7 @@ const Button = styled.div`
   padding: 6px 15px;
   font-size: 14px;
   font-weight: 500;
+  width: fit-content;
   background-color: ${({theme}) => theme.colorHighlight};
   ${subscribeColor};
 `;

@@ -3,6 +3,7 @@ import SubscribeButton from "./SubscribeButton";
 import styled from "styled-components";
 import axios from "axios";
 import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const CardWrapper = styled.div`
   display: flex;
@@ -18,11 +19,21 @@ const ChannelImage = styled.img`
   height: 80px;
   border-radius: 40px;
   margin-bottom: 5px;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 const ChannelName = styled.h2`
     font-size: 20px;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const ChannelSubscribers = styled.h3`
@@ -35,6 +46,7 @@ const ChannelSubscribers = styled.h3`
 const AccountCard = ({channelId}) => {
     const [channel, setChannel] = useState({});
     const {user} = useSelector(state => state.reducer.user);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchChannel();
@@ -55,7 +67,7 @@ const AccountCard = ({channelId}) => {
 
     return (
         <CardWrapper>
-            <ChannelImage src={channel.image}/>
+            <ChannelImage onClick={() => navigate(`/account/${channelId}`, {state: 1})} src={channel.image}/>
             <ChannelName>{channel.name}</ChannelName>
             <ChannelSubscribers>{channel.subscribers} Subscribers</ChannelSubscribers>
             {subscribeButton()}
