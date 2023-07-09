@@ -6,7 +6,8 @@ import {useState} from "react";
 import {
     BrowserRouter,
     Routes,
-    Route
+    Route,
+    HashRouter
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Video from "./pages/Video";
@@ -40,7 +41,7 @@ function App() {
 
     return (
         <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-            <BrowserRouter>
+            <HashRouter>
                 <Container>
                     <Navbar openMenu={openMenu} setOpenMenu={setOpenMenu}/>
                     {menu()}
@@ -62,7 +63,7 @@ function App() {
                         </Routes>
                     </Main>
                 </Container>
-            </BrowserRouter>
+            </HashRouter>
         </ThemeProvider>
   );
 }
